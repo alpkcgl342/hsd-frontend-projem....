@@ -1,0 +1,107 @@
+/* ================================================
+   GRUP 2 – EKİP & KOMİTE DETAY
+   Dosya: grup2_ekip.css
+   Yazar: Ebrar Topal
+   
+   NOT: style.css'e DOKUNMAYIN.
+   Bu dosya sadece Grup 2'ye ait ek stilleri içerir.
+   ================================================ */
+
+/* Komite detay üye kartları fade-up animasyonu */
+#uyeGrid > div {
+    animation: fadeUp 0.45s ease both;
+}
+
+/* Modal animasyonu */
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+#modal > div {
+    animation: fadeIn 0.2s ease;
+}
+
+/* Komite hero banner çizgisi */
+#heroBanner {
+    height: 3px;
+}
+
+/* Üye kartı hover border rengi — JS'ten inline renk gelir,
+   bu sadece genel hover efekti için */
+#uyeGrid > div:hover {
+    box-shadow: 0 12px 30px rgba(0, 40, 165, 0.18);
+}
+
+/* Ekibimiz sayfası komite kartı grid gap ayarı */
+.komite-kart {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Responsive: mobilde 2 sütun üye grid */
+@media (max-width: 480px) {
+    #uyeGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ================================================
+   LIGHT MODE RENK DÜZELTMELERİ
+   ================================================ */
+
+/* Üye kartları arka planı */
+html:not(.dark) #uyeGrid > div {
+    background-color: #ffffff;
+    border-color: #e5e7eb;
+}
+
+/* Sayfa arka planı */
+html:not(.dark) body {
+    background-color: #f9fafb;
+}
+
+/* Komite üyeleri section */
+html:not(.dark) section {
+    background-color: #f9fafb !important;
+}
+
+/* Modal arka planı */
+html:not(.dark) #modal > div {
+    background-color: #ffffff;
+}
+
+/* Üye ismi rengi */
+html:not(.dark) #uyeGrid h5 {
+    color: #1e3a5f;
+}
+
+
+.komite-kart {
+    transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.32s ease;
+    text-decoration: none !important;
+    color: inherit !important;
+    animation: fadeUp 0.5s ease both;
+}
+.komite-kart:hover { transform: translateY(-10px); }
+.komite-kart:nth-child(2) { animation-delay: 0.09s; }
+.komite-kart:nth-child(3) { animation-delay: 0.18s; }
+.komite-kart:nth-child(4) { animation-delay: 0.27s; }
+.komite-kart:nth-child(5) { animation-delay: 0.36s; }
+
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .lightbox-trigger,
+    .ekip-kart,
+    .stat-kart,
+    .komite-kart { transition: none; animation: none; }
+}
+
+html.dark .komite-hero {
+    background: linear-gradient(135deg, #0d1b4b 0%, #04067c 60%, #020318 100%);
+}
+
+html:not(.dark) #komiteler {
+    background-color: #f3f4f6 !important; /* Tailwind gray-100 */
+}
+

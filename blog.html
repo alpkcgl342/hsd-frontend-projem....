@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog — HSD Gelişim</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { darkMode: 'class' }</script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --navy: #04067c;
+            --blue: #0028a5;
+            --accent: #0d6efd;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f3f4f6;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        html.dark body { background: #0d1117; color: #e0e0e0; }
+
+        /* NAV */
+        nav { transition: padding 0.35s ease, box-shadow 0.35s ease; }
+        nav.nav-scrolled {
+            padding-top: 8px !important; padding-bottom: 8px !important;
+            box-shadow: 0 4px 28px rgba(0,0,0,0.45);
+            background-color: rgba(4,6,124,0.92) !important;
+            backdrop-filter: blur(14px);
+        }
+
+        /* HERO */
+        .hero-blog {
+            background: linear-gradient(135deg, #0d6efd 0%, #0028a5 60%, #04067c 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-blog::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: radial-gradient(circle at 70% 50%, rgba(255,255,255,0.06) 0%, transparent 60%);
+        }
+        .hero-dots {
+            position: absolute; inset: 0;
+            background-image: radial-gradient(rgba(255,255,255,0.15) 1px, transparent 1px);
+            background-size: 28px 28px;
+            mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
+        }
+
+        /* DARK MODE — BLOG SECTION */
+        html.dark #blog {
+            background-color: #0d1117 !important;
+        }
+
+        html.dark #blog h2 {
+            color: #f0f6ff !important;
+        }
+
+        html.dark .blog-kart {
+            background: #1c2333 !important;
+            border-color: #2d3748 !important;
+        }
+
+        html.dark .blog-kart h5 {
+            color: #e8f0ff !important;
+        }
+
+        html.dark .blog-kart p {
+            color: #9baec8 !important;
+        }
+
+        html.dark .blog-kart .text-gray-400 {
+            color: #5d7290 !important;
+        }
+
+        html.dark .blog-kart .text-blue-700 {
+            color: #60a5fa !important;
+        }
+
+        html.dark .blog-kart .border-t {
+            border-color: #2d3d55 !important;
+        }
+
+        html.dark .blog-kart .bg-blue-100 {
+            background: #1e3a5f !important;
+            color: #93c5fd !important;
+        }
+
+        /* SCROLL TOP */
+        #scrollTop {
+            position: fixed; bottom: 28px; right: 28px;
+            width: 44px; height: 44px;
+            background: var(--navy); color: white;
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(0,40,165,0.35);
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.3s, transform 0.3s;
+            z-index: 100;
+        }
+        #scrollTop.visible { opacity: 1; pointer-events: all; }
+        #scrollTop:hover   { transform: translateY(-3px); }
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR — tüm sayfalarda kullanın -->
+<nav class="bg-[#04067c] sticky top-0 z-50 py-4">
+    <div class="max-w-7xl mx-auto px-4 flex items-center justify-between">
+        <a href="index.html" class="flex items-center gap-2">
+            <img src="hsd-logo-white.png" alt="HSD Logo" class="h-10" onerror="this.style.display='none'">
+        </a>
+
+        <button id="menuBtn" class="text-white lg:hidden focus:outline-none">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+        </button>
+
+        <div class="hidden lg:flex items-center gap-6">
+            <ul class="flex items-center gap-6">
+                <li><a href="index.html#bu-hafta"   class="text-white font-medium hover:text-gray-300 transition">Bülten</a></li>
+                <li><a href="duyurular.html"         class="text-white font-medium hover:text-gray-300 transition">Duyurular</a></li>
+                <li><a href="blog.html"              class="text-white font-medium hover:text-gray-300 transition">Blog</a></li>
+                <li><a href="hakkimizda.html"        class="text-white font-medium hover:text-gray-300 transition">Hakkımızda</a></li>
+                <li><a href="komiteler.html"   class="text-white font-medium hover:text-gray-300 transition">Komiteler</a></li>
+                <li><a href="ekibimiz.html"    class="text-white font-medium hover:text-gray-300 transition">Ekibimiz</a></li>
+                <li><a href="iletisim.html"    class="text-white font-medium hover:text-gray-300 transition">İletişim</a></li>
+            </ul>
+            <a href="https://www.gelisim.edu.tr" target="_blank">
+                <img src="igu.png" alt="IGU Logo" class="h-10 ml-4" onerror="this.style.display='none'">
+            </a>
+            <button id="darkModeBtn" class="text-2xl bg-transparent border-none cursor-pointer ml-2">🌙</button>
+        </div>
+    </div>
+
+    <div id="mobileMenu" class="hidden lg:hidden px-4 pt-2 pb-4 flex flex-col gap-3">
+        <a href="index.html#bu-hafta"  class="text-white font-medium">Bülten</a>
+        <a href="duyurular.html"       class="text-white font-medium">Duyurular</a>
+        <a href="blog.html"            class="text-white font-medium">Blog</a>
+        <a href="hakkimizda.html"      class="text-white font-medium">Hakkımızda</a>
+        <a href="komiteler.html"      class="text-white font-medium">Komiteler</a>
+        <a href="ekibimiz.html"  class="text-white font-medium">Ekibimiz</a>
+        <a href="iletisim.html"  class="text-white font-medium">İletişim</a>
+        <button id="darkModeBtnMobile" class="text-2xl bg-transparent border-none cursor-pointer text-white w-fit">🌙</button>
+    </div>
+</nav>
+
+    <!-- Mobil menü -->
+    <div id="mobileMenu" class="hidden lg:hidden px-4 pt-2 pb-4 flex flex-col gap-3">
+        <a href="#bu-hafta"   class="text-white font-medium">Bülten</a>
+        <a href="duyurular.html" class="text-white font-medium">Duyurular</a>
+        <a href="blog.html"       class="text-white font-medium">Blog</a>
+        <a href="hakkimizda.html" class="text-white font-medium">Hakkımızda</a>
+        <a href="komiteler.html"  class="text-gray-200 hover:text-white text-sm font-medium transition-colors">Komiteler</a>        
+        <a href="ekibimiz.html"   class="text-white font-medium">Ekibimiz</a>
+        <a href="iletisim.html"   class="text-white font-medium">İletişim</a>
+        <button id="darkModeBtnMobile" class="text-2xl bg-transparent border-none cursor-pointer text-white w-fit">🌙</button>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero-blog py-20 text-white text-center relative">
+    <div class="hero-dots"></div>
+    <div class="max-w-3xl mx-auto px-4 relative z-10">
+        <span class="inline-block bg-white/10 border border-white/20 text-white text-xs font-semibold px-4 py-1.5 rounded-full mb-5 animate__animated animate__fadeInDown">
+            ✍️ HSD Gelişim
+        </span>
+        <h1 class="text-4xl md:text-5xl font-extrabold mb-4 animate__animated animate__fadeInUp">
+            Blog Yazılarımız
+        </h1>
+        <p class="text-blue-100 text-lg animate__animated animate__fadeInUp animate__delay-1s">
+            HSD Gelişim'in teknoloji, inovasyon ve kariyer dünyasındaki güncel gelişmeleri paylaştığı blog yazılarıyla bilgi dolu bir yolculuğa çıkın.
+        </p>
+    </div>
+</section>
+
+<!-- BLOG -->
+<section id="blog" class="py-20 bg-gray-100 scroll-mt-20">
+    <div class="max-w-7xl mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-4" data-aos="fade-up">Blog Yazılarımız</h2>
+        <div class="w-12 h-1 bg-blue-800 mx-auto mb-12 rounded" data-aos="fade-up" data-aos-delay="100"></div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+            <a href="https://medium.com/huawei-student-developers-turkiye/elektri%CC%87kli%CC%87-ara%C3%A7larda-yapay-zeka-destekli%CC%87-menzi%CC%87l-hesaplama-921d3b47e24f" target="_blank" class="no-underline" data-aos="fade-up" data-aos-delay="0">
+                <div class="blog-kart bg-white rounded-2xl overflow-hidden border border-blue-100 hover:-translate-y-2 transition-all duration-300 h-full flex flex-col">
+                    <div class="h-44 overflow-hidden">
+                        <img src="yapay-zeka-ve-elektrikli-araclar-1024x538.jpg" alt="Blog Görseli" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-5 flex flex-col flex-1">
+                        <span class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full mb-3 inline-block">Yapay Zeka</span>
+                        <h5 class="font-bold text-gray-800 mb-2">Elektrikli Araçlarda Yapay Zeka Destekli Menzil Hesaplama</h5>
+                        <p class="text-gray-500 text-sm flex-1">Elektrikli araçlarda mernzili etkileyen faktörler</p>
+                        <div class="flex justify-between items-center mt-4 pt-3 border-t border-gray-100">
+                            <span class="text-gray-400 text-xs">✍️İrem Kuray</span>
+                            <span class="text-blue-700 text-xs font-semibold">Daha Fazla Oku →</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+
+            <a href="https://medium.com/huawei-student-developers-turkiye/oyun-yap%C4%B1m%C4%B1nda-motor-se%C3%A7imi-ve-%C3%B6nemi-479c7b3fb2da" target="_blank" class="no-underline" data-aos="fade-up" data-aos-delay="0">
+                <div class="blog-kart bg-white rounded-2xl overflow-hidden border border-blue-100 hover:-translate-y-2 transition-all duration-300 h-full flex flex-col">
+                    <div class="h-44 overflow-hidden">
+                        <img src="oyun-tasarim-gelistirme.webp" alt="Blog Görseli" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-5 flex flex-col flex-1">
+                        <span class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full mb-3 inline-block">Oyun</span>
+                        <h5 class="font-bold text-gray-800 mb-2">Oyun Yapımında Motor Seçimi ve Önemi</h5>
+                        <p class="text-gray-500 text-sm flex-1">Oyun geliştirme sürecinde doğru motor seçimi, başarının anahtarıdır. Bu yazıda oyun motorları hakkında bilgiler bulacaksınız.</p>
+                        <div class="flex justify-between items-center mt-4 pt-3 border-t border-gray-100">
+                            <span class="text-gray-400 text-xs">✍️Eren Baksoy</span>
+                            <span class="text-blue-700 text-xs font-semibold">Daha Fazla Oku →</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+
+            <a href="https://medium.com/huawei-student-developers-turkiye/insanlarmi-yapaylasiyor-yoksa-yapayzekami-insanlasiyor-44b85a3bad7c" target="_blank" class="no-underline" data-aos="fade-up" data-aos-delay="0">
+                <div class="blog-kart bg-white rounded-2xl overflow-hidden border border-blue-100 hover:-translate-y-2 transition-all duration-300 h-full flex flex-col">
+                    <div class="h-44 overflow-hidden">
+                        <img src="yapay-zeka-ile-insan-beyni-arasindaki-cilgin-benzerlikler.jpg" alt="Blog Görseli" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-5 flex flex-col flex-1">
+                        <span class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full mb-3 inline-block">Yapay Zeka</span>
+                        <h5 class="font-bold text-gray-800 mb-2">İnsanlar mı Yapaylaşıyor, Yoksa Yapay Zekâ mı İnsanlaşıyor?</h5>
+                        <p class="text-gray-500 text-sm flex-1">Teknoloji gelişirken insan neden sadeleşiyor?
+                        <div class="flex justify-between items-center mt-4 pt-3 border-t border-gray-100">
+                            <span class="text-gray-400 text-xs">✍️Kadir Dalkılıç</span>
+                            <span class="text-blue-700 text-xs font-semibold">Daha Fazla Oku →</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+
+            <a href="https://medium.com/huawei-student-developers-turkiye/yapay-zeka-%C3%A7a%C4%9F%C4%B1nda-proje-y%C3%B6netimi-ve-i%CC%87%C5%9F-analizi-operasyondan-stratejiye-evrim-abef5e6eabcf" target="_blank" class="no-underline" data-aos="fade-up" data-aos-delay="0">
+                <div class="blog-kart bg-white rounded-2xl overflow-hidden border border-blue-100 hover:-translate-y-2 transition-all duration-300 h-full flex flex-col">
+                    <div class="h-44 overflow-hidden">
+                        <img src="proje-2.webp" alt="Blog Görseli" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-5 flex flex-col flex-1">
+                        <span class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full mb-3 inline-block">Yapay Zeka</span>
+                        <h5 class="font-bold text-gray-800 mb-2">Yapay Zekâ Çağında Proje Yönetimi ve İş Analizi: Operasyondan Stratejiye Evrim</h5>
+                        <p class="text-gray-500 text-sm flex-1">Geleneksel yöntemlerin yerini veri odaklı öngörülere bıraktığı bir döneme giriyoruz. Artık sadece “ne olduğunu” değil, “ne olacağını” yönetmek zorundayız. İşin Mutfağından Strateji Masasına: AI ile Kabuk Değişimi.</p>
+                        <div class="flex justify-between items-center mt-4 pt-3 border-t border-gray-100">
+                            <span class="text-gray-400 text-xs">✍️Kaan Bağdur</span>
+                            <span class="text-blue-700 text-xs font-semibold">Daha Fazla Oku →</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+
+            <a href="https://medium.com/huawei-student-developers-turkiye/yazilimin-yeni-katmani-35ef27a401b9" target="_blank" class="no-underline" data-aos="fade-up" data-aos-delay="0">
+                <div class="blog-kart bg-white rounded-2xl overflow-hidden border border-blue-100 hover:-translate-y-2 transition-all duration-300 h-full flex flex-col">
+                    <div class="h-44 overflow-hidden">
+                        <img src="agency.webp" alt="Blog Görseli" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-5 flex flex-col flex-1">
+                        <span class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full mb-3 inline-block">Yapay Zeka</span>
+                        <h5 class="font-bold text-gray-800 mb-2">Yazılımın Yeni Katmanı: Niyet Mühendisliği ve Agency</h5>
+                        <p class="text-gray-500 text-sm flex-1">Gelecek, kod satırlarında kaybolanların değil; niyetini bir mühendis keskinliğiyle tasarlayıp, o tasviri ‘Agency’ sahibi bir iradeyle gerçeğe dönüştürenlerin olacak.</p>
+                        <div class="flex justify-between items-center mt-4 pt-3 border-t border-gray-100">
+                            <span class="text-gray-400 text-xs">✍️ Betül Kırdı</span>
+                            <span class="text-blue-700 text-xs font-semibold">Daha Fazla Oku →</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+
+            <a href="https://medium.com/huawei-student-developers-turkiye/i%CC%87%C5%9F-analizi-belirsizli%C4%9Fi-de%C4%9Fere-d%C3%B6n%C3%BC%C5%9Ft%C3%BCrme-sanat%C4%B1-7f67dce3d77e" target="_blank" class="no-underline" data-aos="fade-up" data-aos-delay="0">
+                <div class="blog-kart bg-white rounded-2xl overflow-hidden border border-blue-100 hover:-translate-y-2 transition-all duration-300 h-full flex flex-col">
+                    <div class="h-44 overflow-hidden">
+                        <img src="iş_analizi.webp" alt="Blog Görseli" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-5 flex flex-col flex-1">
+                        <span class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full mb-3 inline-block">Analiz</span>
+                        <h5 class="font-bold text-gray-800 mb-2">İş Analizi: Belirsizliği Değere Dönüştürme Sanatı</h5>
+                        <p class="text-gray-500 text-sm flex-1">İş dünyasının karmaşık süreçlerini teknolojiyle buluşturan, değer odaklı çözüm üretme disiplinine dair kapsamlı bir bakış. Peki, nedir bu iş analizi? Sadece bir aracı kurum mu, yoksa başarının gizli formülü mü?</p>
+                        <div class="flex justify-between items-center mt-4 pt-3 border-t border-gray-100">
+                            <span class="text-gray-400 text-xs">✍️ Kaan Bağdur</span>
+                            <span class="text-blue-700 text-xs font-semibold">Daha Fazla Oku →</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+
+            <a href="https://medium.com/huawei-student-developers-turkiye/yapay-zeka-destekli-%C3%A7arp%C4%B1%C5%9Fma-%C3%B6nleme-sistemleri-4a81446edc89" target="_blank" class="no-underline" data-aos="fade-up" data-aos-delay="0">
+                <div class="blog-kart bg-white rounded-2xl overflow-hidden border border-blue-100 hover:-translate-y-2 transition-all duration-300 h-full flex flex-col">
+                    <div class="h-44 overflow-hidden">
+                        <img src="araba.webp" alt="Blog Görseli" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-5 flex flex-col flex-1">
+                        <span class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full mb-3 inline-block">Yapay Zeka</span>
+                        <h5 class="font-bold text-gray-800 mb-2">Yapay Zeka Destekli Çarpışma Önleme Sistemleri</h5>
+                        <p class="text-gray-500 text-sm flex-1">Otomotiv sektöründe yapay zeka ile gelişen akıllı güvenlik sistemleri ve çarpışma önleme teknolojileri.</p>
+                        <div class="flex justify-between items-center mt-4 pt-3 border-t border-gray-100">
+                            <span class="text-gray-400 text-xs">✍️ İrem Kuray</span>
+                            <span class="text-blue-700 text-xs font-semibold">Daha Fazla Oku →</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <a href="https://medium.com/huawei-student-developers-turkiye/veri-g%C3%BCn%C3%BCm%C3%BCz%C3%BCn-yeni-petrol%C3%BC-m%C3%BC-9c7ae066b750" target="_blank" class="no-underline" data-aos="fade-up" data-aos-delay="100">
+                <div class="blog-kart bg-white rounded-2xl overflow-hidden border border-blue-100 hover:-translate-y-2 transition-all duration-300 h-full flex flex-col">
+                    <div class="h-44 overflow-hidden">
+                        <img src="Veri-Analisti-Nedir-ve-Neden-Onemlidir.webp" alt="Blog Görseli" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-5 flex flex-col flex-1">
+                        <span class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full mb-3 inline-block">Veri</span>
+                        <h5 class="font-bold text-gray-800 mb-2">Veri, Günümüzün Yeni Petrolü mü?</h5>
+                        <p class="text-gray-500 text-sm flex-1">Veriyi stratejik bir varlığa dönüştürerek rekabet avantajı sağlamanın ve dijital dünyanın en değerli kaynağını yönetmenin incelikleri.</p>
+                        <div class="flex justify-between items-center mt-4 pt-3 border-t border-gray-100">
+                            <span class="text-gray-400 text-xs">✍️ Furkan Erden</span>
+                            <span class="text-blue-700 text-xs font-semibold">Daha Fazla Oku →</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <a href="https://medium.com/huawei-student-developers-turkiye/dijital-sadele%C5%9Fme-teknoloji-%C3%A7a%C4%9F%C4%B1nda-daha-az-ile-daha-fazla-ya%C5%9Famak-ec46fe17692e" target="_blank" class="no-underline" data-aos="fade-up" data-aos-delay="200">
+                <div class="blog-kart bg-white rounded-2xl overflow-hidden border border-blue-100 hover:-translate-y-2 transition-all duration-300 h-full flex flex-col">
+                    <div class="h-44 overflow-hidden">
+                        <img src="dijitallesme-nedir-ana-gorseli-1024x683.webp" alt="Blog Görseli" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-5 flex flex-col flex-1">
+                        <span class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full mb-3 inline-block">Verimlilik</span>
+                        <h5 class="font-bold text-gray-800 mb-2">Dijital Sadeleşme: Teknoloji Çağında Daha Az ile Daha Fazla Yaşamak</h5>
+                        <p class="text-gray-500 text-sm flex-1">Teknolojiyi hayatımızdan çıkarmak değil; onu doğru konumlandırıp kontrollü kullanmak için stratejiler.</p>
+                        <div class="flex justify-between items-center mt-4 pt-3 border-t border-gray-100">
+                            <span class="text-gray-400 text-xs">✍️ Kadir Dalkılıç</span>
+                            <span class="text-blue-700 text-xs font-semibold">Daha Fazla Oku →</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <a href="https://medium.com/huawei-student-developers-turkiye/yapay-zek%C3%A2n%C4%B1n-oyun-geli%C5%9Ftirmeye-olan-etkileri-31601865e190" target="_blank" class="no-underline" data-aos="fade-up" data-aos-delay="300">
+                <div class="blog-kart bg-white rounded-2xl overflow-hidden border border-blue-100 hover:-translate-y-2 transition-all duration-300 h-full flex flex-col">
+                    <div class="h-44 overflow-hidden">
+                        <img src="yapay-zeka-oyun-gelistirme.jpg" alt="Blog Görseli" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-5 flex flex-col flex-1">
+                        <span class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full mb-3 inline-block">Oyun</span>
+                        <h5 class="font-bold text-gray-800 mb-2">Yapay Zekânın Oyun Geliştirmeye Olan Etkileri</h5>
+                        <p class="text-gray-500 text-sm flex-1">Yapay zekanın oyun geliştirme süreçlerine getirdiği yenilikler ve gelecekteki etkileri.</p>
+                        <div class="flex justify-between items-center mt-4 pt-3 border-t border-gray-100">
+                            <span class="text-gray-400 text-xs">✍️ Eren Baksoy</span>
+                            <span class="text-blue-700 text-xs font-semibold">Daha Fazla Oku →</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+    </div>
+</section>
+
+<!-- SCROLL TOP -->
+<button id="scrollTop" aria-label="Yukarı çık">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/>
+    </svg>
+</button>
+
+<!-- FOOTER -->
+<footer class="bg-[#04067c] text-white py-10 mt-0">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
+        <p class="text-sm text-blue-200">© 2025 HSD Gelişim — Tüm hakları saklıdır.</p>
+        <div class="flex items-center gap-5">
+            <a href="https://www.instagram.com/hsdgelisim/" target="_blank" class="text-blue-200 hover:text-white transition text-sm">Instagram</a>
+            <a href="https://www.linkedin.com/company/hsdigu/" target="_blank" class="text-blue-200 hover:text-white transition text-sm">LinkedIn</a>
+            <a href="mailto:hsd.iguu@gmail.com" class="text-blue-200 hover:text-white transition text-sm">E-posta</a>
+        </div>
+    </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    // AOS
+    AOS.init({ duration: 700, once: true, offset: 60, easing: 'ease-out-cubic' });
+
+    // GSAP sticky nav
+    gsap.registerPlugin(ScrollTrigger);
+    ScrollTrigger.create({
+        start: "top -60",
+        onEnter:     () => document.querySelector('nav').classList.add('nav-scrolled'),
+        onLeaveBack: () => document.querySelector('nav').classList.remove('nav-scrolled')
+    });
+
+    // DARK MODE
+    const darkBtn       = document.getElementById("darkModeBtn");
+    const darkBtnMobile = document.getElementById("darkModeBtnMobile");
+    const html          = document.documentElement;
+
+    function applyTheme(isDark) {
+        html.classList.toggle("dark", isDark);
+        const icon = isDark ? "☀️" : "🌙";
+        if (darkBtn)       darkBtn.textContent       = icon;
+        if (darkBtnMobile) darkBtnMobile.textContent = icon;
+        localStorage.setItem("tema", isDark ? "dark" : "light");
+    }
+
+    applyTheme(localStorage.getItem("tema") === "dark");
+
+    if (darkBtn)       darkBtn.addEventListener("click",       () => applyTheme(!html.classList.contains("dark")));
+    if (darkBtnMobile) darkBtnMobile.addEventListener("click", () => applyTheme(!html.classList.contains("dark")));
+
+    // MOBİL MENÜ
+    const menuBtn    = document.getElementById("menuBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
+    if (menuBtn) {
+        menuBtn.addEventListener("click", () => mobileMenu.classList.toggle("hidden"));
+        mobileMenu.querySelectorAll("a").forEach(a => a.addEventListener("click", () => mobileMenu.classList.add("hidden")));
+    }
+
+    // SCROLL TOP
+    const scrollTopBtn = document.getElementById("scrollTop");
+    window.addEventListener("scroll", () => {
+        scrollTopBtn.classList.toggle("visible", window.scrollY > 300);
+    });
+    scrollTopBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+
+});
+</script>
+</body>
+</html>

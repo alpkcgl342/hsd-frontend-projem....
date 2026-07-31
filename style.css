@@ -1,0 +1,707 @@
+/* ================================================
+   GENEL SAYFA AYARLARI
+   ================================================ */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+section {
+    padding: 100px 0 !important;
+    scroll-margin-top: 80px;
+}
+
+section h2 {
+    margin-bottom: 60px !important;
+    font-weight: 700;
+    position: relative;
+    text-align: center;
+}
+
+section h2::after,
+.h2-alt::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 4px;
+    background: #0028a5;
+    margin: 14px auto 0;
+    border-radius: 2px;
+}
+
+
+/* ================================================
+   NAVBAR
+   ================================================ */
+.navbar {
+    background-color: #04067c;
+    padding: 15px 0 !important;
+}
+
+.navbar-brand img {
+    height: 40px;
+    width: auto;
+}
+
+/* ── Sticky Nav Shrink (GSAP scroll tetikler) ── */
+nav {
+    transition: padding 0.35s ease, box-shadow 0.35s ease, background 0.35s ease;
+}
+
+nav.nav-scrolled {
+    padding-top:    8px !important;
+    padding-bottom: 8px !important;
+    box-shadow: 0 4px 28px rgba(0, 0, 0, 0.45);
+    background-color: rgba(4, 6, 124, 0.92) !important;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+}
+
+
+/* ================================================
+   HERO & CAROUSEL
+   ================================================ */
+.main-hero {
+    background: linear-gradient(135deg, #0d6efd 0%, #0028a5 100%) !important;
+    padding: 100px 0;
+    box-shadow: inset 0 -10px 20px rgba(0, 0, 0, 0.05);
+}
+
+.main-hero h1 {
+    font-weight: 800;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.carousel-item img {
+    height: 400px !important;
+    object-fit: cover;
+    border-radius: 15px;
+}
+
+.komite-hero {
+    background: linear-gradient(135deg, #0d6efd 0%, #0028a5 60%, #04067c 100%);
+}
+
+
+/* ================================================
+   HAKKIMIZDA & İSTATİSTİKLER
+   ================================================ */
+.hakkimizda-baslik {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #04067c;
+    margin-bottom: 16px;
+}
+
+.hakkimizda-metin {
+    color: #444;
+    line-height: 1.8;
+    margin-bottom: 12px;
+}
+
+.hsd-etiket {
+    background: #e8ecff;
+    color: #0028a5;
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 6px 14px;
+    border-radius: 20px;
+    letter-spacing: 0.3px;
+}
+
+.stat-kart {
+    background: #fff;
+    border: 2px solid #e8ecff;
+    border-radius: 16px;
+    padding: 28px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.3s ease;
+}
+
+.stat-kart:hover {
+    box-shadow: 0 8px 24px rgba(0, 40, 165, 0.12);
+    transform: translateY(-4px);
+}
+
+.stat-sayi {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #0028a5;
+    line-height: 1;
+}
+
+
+/* ================================================
+   EKİBİMİZ — KARTLAR & ETİKETLER
+   ================================================ */
+.ekip-grup-baslik {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+}
+
+.ekip-grup-cizgi {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #dee2e6, transparent);
+}
+
+.ekip-grup-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 5px 16px;
+    border-radius: 20px;
+}
+
+.elci-label     { background: #fff3cd; color: #856404; }
+.yardimci-label { background: #e8ecff; color: #0028a5; }
+.baskanlari-label { background: #e8f5e9; color: #1b5e20; }
+
+.ekip-kart {
+    background: #fff;
+    border-radius: 16px;
+    padding: 28px 16px 20px;
+    text-align: center;
+    position: relative;
+    transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.32s ease;
+}
+
+.ekip-kart--elci    { border: 2px solid #ffc107; box-shadow: 0 4px 20px rgba(255, 193, 7, 0.18); }
+.ekip-kart--yardimci { border: 1px solid #b8c5f5; }
+.ekip-kart--baskan  { border: 1px solid #b2dfdb; }
+
+.ekip-kart:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 30px rgba(0, 40, 165, 0.25);
+    border-color: #0028a5;
+}
+
+.ekip-avatar-wrap {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin: 0 auto 14px;
+    overflow: hidden;
+    border: 3px solid #0028a5;
+}
+
+.ekip-avatar-wrap--elci {
+    width: 96px;
+    height: 96px;
+    border-color: #ffc107;
+}
+
+.ekip-avatar { width: 100%; height: 100%; object-fit: cover; }
+
+.ekip-kulup-adi {
+    display: inline-block;
+    background: #e8f5e9;
+    color: #1b5e20;
+    padding: 3px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-top: 10px;
+    border: 1px solid rgba(27, 94, 32, 0.1);
+}
+
+
+/* ================================================
+   KOMİTE KARTLARI
+   ================================================ */
+.komite-kart {
+    transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.32s ease;
+    text-decoration: none !important;
+    color: inherit !important;
+    animation: fadeUp 0.5s ease both;
+}
+
+.komite-kart:hover { transform: translateY(-10px); }
+.komite-kart:nth-child(2) { animation-delay: 0.09s; }
+.komite-kart:nth-child(3) { animation-delay: 0.18s; }
+.komite-kart:nth-child(4) { animation-delay: 0.27s; }
+.komite-kart:nth-child(5) { animation-delay: 0.36s; }
+
+
+/* ================================================
+   BANNER ŞERİTLERİ
+   ================================================ */
+.banner-sosyal     { background: linear-gradient(90deg, #e91e8c, #ff7043); }
+.banner-etkinlik   { background: linear-gradient(90deg, #00897b, #43a047); }
+.banner-sponsorluk { background: linear-gradient(90deg, #f57c00, #fdd835); }
+.banner-teknik     { background: linear-gradient(90deg, #6c3fc5, #2563eb); }
+.banner-medium     { background: linear-gradient(90deg, #1a1a1a, #00b074); }
+
+
+/* ================================================
+   EKİBİ GÖR BUTONLARI
+   ================================================ */
+.btn-gor {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 20px;
+    border-radius: 40px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: filter 0.2s, transform 0.2s;
+    white-space: nowrap;
+    color: #fff;
+}
+
+.btn-gor:hover          { filter: brightness(0.88); transform: translateX(3px); }
+.btn-gor svg            { transition: transform 0.2s; }
+.btn-gor:hover svg      { transform: translateX(4px); }
+.btn-sosyal             { background: linear-gradient(90deg, #e91e8c, #ff7043); }
+.btn-etkinlik           { background: #00897b; }
+.btn-sponsorluk         { background: #f57c00; }
+.btn-teknik             { background: #6c3fc5; }
+.btn-medium             { background: linear-gradient(90deg, #1a1a1a, #00b074); }
+
+
+/* ================================================
+   BLOG KARTLARI
+   ================================================ */
+.blog-kart-ust {
+    padding: 0;
+    height: 180px;
+    overflow: hidden;
+}
+
+.blog-kart-ust img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+
+/* ================================================
+   DUYURU FİLTRELEME
+   ================================================ */
+.duyuru-kart.gizli {
+    display: none;
+}
+
+.filtre-btn.aktif {
+    background-color: #04067c !important;
+    color: #ffffff !important;
+    border-color: #04067c !important;
+}
+
+
+/* ================================================
+   LIGHTBOX (GALERİ)
+   ================================================ */
+.lightbox-trigger {
+    cursor: zoom-in;
+    transition: all 0.3s ease;
+}
+
+.lightbox-trigger:hover {
+    transform: scale(1.03);
+    box-shadow: 0 8px 25px rgba(0, 40, 165, 0.3);
+}
+
+.lightbox-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(4, 6, 124, 0.94);
+    backdrop-filter: blur(6px);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    animation: fadeIn 0.25s ease;
+}
+
+.lightbox-overlay.aktif { display: flex; }
+
+.lightbox-img {
+    max-width: 88vw;
+    max-height: 75vh;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    animation: zoomIn 0.3s ease;
+    object-fit: contain;
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 28px;
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 2.5rem;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.lightbox-close:hover { transform: rotate(90deg) scale(1.2); }
+
+.lightbox-prev,
+.lightbox-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    font-size: 2rem;
+    padding: 15px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+    user-select: none;
+}
+
+.lightbox-prev { left: 20px; }
+.lightbox-next { right: 20px; }
+.lightbox-prev:hover,
+.lightbox-next:hover { background: rgba(255, 255, 255, 0.3); }
+
+
+/* ================================================
+   ANİMASYONLAR
+   ================================================ */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes zoomIn {
+    from { transform: scale(0.9); opacity: 0; }
+    to   { transform: scale(1);   opacity: 1; }
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+
+/* ================================================
+   ERİŞİLEBİLİRLİK
+   ================================================ */
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .lightbox-trigger,
+    .ekip-kart,
+    .stat-kart,
+    .komite-kart { transition: none; animation: none; }
+}
+
+.lightbox-close:focus-visible,
+.lightbox-prev:focus-visible,
+.lightbox-next:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: 2px;
+}
+
+
+/* ================================================
+   DARK MODE  (html.dark — Tailwind dark: prefix ile uyumlu)
+   ================================================ */
+
+html.dark body {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+html.dark section {
+    background-color: #1a1a1a !important;
+}
+
+html.dark h1,
+html.dark h2,
+html.dark h3,
+html.dark h5,
+html.dark .hakkimizda-baslik,
+html.dark .ekip-isim {
+    color: #ffffff !important;
+}
+
+html.dark p,
+html.dark p span,
+html.dark .text-gray-500,
+html.dark .text-gray-400,
+html.dark .text-muted {
+    color: #cbd5e0 !important;
+}
+
+html.dark .hakkimizda-metin,
+html.dark .stat-etiket,
+html.dark .ekip-kulup-adi {
+    color: #bbbbbb;
+}
+
+html.dark .bg-white,
+html.dark .bg-gray-100 {
+    background-color: #1a1a1a !important;
+}
+
+html.dark .navbar {
+    background-color: #2d333b !important;
+    border-bottom: 1px solid #1a1d23;
+}
+
+html.dark .nav-link         { color: #ffffff !important; }
+html.dark .nav-link:hover   { color: #adbac7 !important; }
+html.dark .navbar-brand     { color: #ffffff !important; }
+
+html.dark .main-hero {
+    background: #313943 !important;
+    color: #ffffff !important;
+}
+
+html.dark .main-hero h1,
+html.dark .main-hero p {
+    color: #ffffff !important;
+}
+
+html.dark .komite-hero {
+    background: linear-gradient(135deg, #0d1b4b 0%, #04067c 60%, #020318 100%);
+}
+
+html.dark .stat-kart,
+html.dark .ekip-kart {
+    background-color: #242424;
+    border-color: #333333;
+    color: #fff;
+}
+
+html.dark .ekip-kart:hover {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    border-color: #ffc107;
+}
+
+html.dark .blog-kart {
+    background: #1e2530;
+    border-color: #2d3748;
+}
+
+html.dark .blog-kart-ust {
+    background: linear-gradient(135deg, #0a3d8f 0%, #02034d 100%);
+}
+
+html.dark .blog-etiket { background: #2d3a5c; color: #7eb3ff; }
+html.dark .blog-alt    { border-top-color: #2d3748; }
+html.dark .blog-yazar  { color: #8899aa; }
+html.dark .blog-medium { color: #7eb3ff; }
+
+html.dark .ekip-kulup-adi {
+    background: rgba(178, 223, 219, 0.1);
+    color: #b2dfdb;
+    border-color: rgba(178, 223, 219, 0.2);
+}
+
+html.dark .ekip-grup-cizgi {
+    background: linear-gradient(to right, transparent, #333, transparent);
+}
+
+html.dark #duyurular h2     { color: #fff; }
+html.dark .hsd-bulten,
+html.dark .duyurular-section {
+    background-color: #313943 !important;
+    color: #ffffff !important;
+}
+
+html.dark .duyuru-kart {
+    background-color: #1e2530 !important;
+    border-color: #2d3748 !important;
+}
+
+html.dark .filtre-btn {
+    background-color: #1e2530;
+    color: #cbd5e0;
+    border-color: #444c56;
+}
+
+html.dark .filtre-btn.aktif {
+    background-color: #04067c !important;
+    color: #ffffff !important;
+    border-color: #7eb3ff !important;
+}
+
+html.dark .form-control,
+html.dark input,
+html.dark textarea {
+    background-color: #2d333b !important;
+    border: 1.5px solid #444c56 !important;
+    color: #ffffff !important;
+}
+
+html.dark .form-control::placeholder,
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+    color: #adbac7 !important;
+    opacity: 1;
+}
+
+html.dark .form-control:focus,
+html.dark input:focus,
+html.dark textarea:focus {
+    background-color: #313943 !important;
+    border-color: #58a6ff !important;
+    box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.25) !important;
+}
+
+html.dark label { color: #ffffff !important; }
+
+#vanta-hero {
+    position: relative;
+    mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+}
+
+body {
+  background: radial-gradient(circle at top center, #060a1f 0%, #030712 100%);
+  background-attachment: fixed;
+}
+
+.deep-space-bg {
+  background-color: #030712;
+  background-image: 
+    radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 3px),
+    radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 2px),
+    radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 3px);
+  background-size: 550px 550px, 350px 350px, 250px 250px;
+  background-position: 0 0, 40px 60px, 130px 270px;
+}
+
+header {
+    background: rgba(4, 6, 124, 0.7) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+.ambient-glow {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.05) 0%, transparent 70%);
+    z-index: -1;
+    pointer-events: none;
+}
+
+html:not(.dark) #komiteler {
+    background-color: #f3f4f6 !important;
+}
+
+/* ------------------------------------------------------ */
+
+.stat-kart {
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 12px;
+}
+
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(28px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+.kart { animation: fadeUp 0.6s ease both; }
+.kart:nth-child(2) { animation-delay: 0.12s; }
+.kart:nth-child(3) { animation-delay: 0.24s; }
+
+.kart { transition: transform 0.3s
+  cubic-bezier(0.34,1.56,0.64,1),
+  box-shadow 0.3s ease; }
+.kart:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 28px
+    rgba(0,40,165,0.2);
+  border-color: #0d6efd;
+}
+
+.btn-pill {
+  background: linear-gradient(
+    90deg, #0d6efd, #6c3fc5
+  );
+  border-radius: 40px;
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  font-weight: 700;
+  transition: filter 0.2s, transform 0.2s;
+}
+.btn-pill:hover {
+  filter: brightness(1.12);
+  transform: translateY(-2px);
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    #e8ecff 25%, #c8d4ff 50%, #e8ecff 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.gradient-border {
+  background: white;
+  background-clip: padding-box;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  position: relative;
+}
+.gradient-border::before {
+  content: '';
+  position: absolute; inset: -2px;
+  border-radius: 14px;
+  background: linear-gradient(
+    135deg, #0d6efd, #a855f7, #ec4899
+  );
+  z-index: -1;
+}
+
+
+@media (prefers-color-scheme: dark) {
+    .form-control,
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="password"],
+    textarea,
+    select {
+        background-color: #2d333b !important;
+        border: 1.5px solid #444c56 !important;
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+    }
+
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus {
+        -webkit-box-shadow: 0 0 0px 1000px #2d333b inset !important;
+        -webkit-text-fill-color: #ffffff !important;
+    }
+}

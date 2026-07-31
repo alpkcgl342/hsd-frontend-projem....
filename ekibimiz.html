@@ -1,0 +1,219 @@
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HSD Gelişim Üniversitesi</title>
+
+    
+    <!-- ✅ DOĞRU: CDN önce, config sonra -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { darkMode: 'class' }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- NAVBAR — tüm sayfalarda kullanın -->
+<nav class="bg-[#04067c] sticky top-0 z-50 py-4">
+    <div class="max-w-7xl mx-auto px-4 flex items-center justify-between">
+        <a href="index.html" class="flex items-center gap-2">
+            <img src="hsd-logo-white.png" alt="HSD Logo" class="h-10" onerror="this.style.display='none'">
+        </a>
+
+        <button id="menuBtn" class="text-white lg:hidden focus:outline-none">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+        </button>
+
+        <div class="hidden lg:flex items-center gap-6">
+            <ul class="flex items-center gap-6">
+                <li><a href="index.html#bu-hafta"   class="text-white font-medium hover:text-gray-300 transition">Bülten</a></li>
+                <li><a href="duyurular.html"         class="text-white font-medium hover:text-gray-300 transition">Duyurular</a></li>
+                <li><a href="blog.html"              class="text-white font-medium hover:text-gray-300 transition">Blog</a></li>
+                <li><a href="hakkimizda.html"        class="text-white font-medium hover:text-gray-300 transition">Hakkımızda</a></li>
+                <li><a href="komiteler.html"   class="text-white font-medium hover:text-gray-300 transition">Komiteler</a></li>
+                <li><a href="ekibimiz.html"    class="text-white font-medium hover:text-gray-300 transition">Ekibimiz</a></li>
+                <li><a href="iletisim.html"    class="text-white font-medium hover:text-gray-300 transition">İletişim</a></li>
+            </ul>
+            <a href="https://www.gelisim.edu.tr" target="_blank">
+                <img src="igu.png" alt="IGU Logo" class="h-10 ml-4" onerror="this.style.display='none'">
+            </a>
+            <button id="darkModeBtn" class="text-2xl bg-transparent border-none cursor-pointer ml-2">🌙</button>
+        </div>
+    </div>
+
+    <div id="mobileMenu" class="hidden lg:hidden px-4 pt-2 pb-4 flex flex-col gap-3">
+        <a href="index.html#bu-hafta"  class="text-white font-medium">Bülten</a>
+        <a href="duyurular.html"       class="text-white font-medium">Duyurular</a>
+        <a href="blog.html"            class="text-white font-medium">Blog</a>
+        <a href="hakkimizda.html"      class="text-white font-medium">Hakkımızda</a>
+        <a href="komiteler.html"      class="text-white font-medium">Komiteler</a>
+        <a href="ekibimiz.html"  class="text-white font-medium">Ekibimiz</a>
+        <a href="iletisim.html"  class="text-white font-medium">İletişim</a>
+        <button id="darkModeBtnMobile" class="text-2xl bg-transparent border-none cursor-pointer text-white w-fit">🌙</button>
+    </div>
+</nav>
+
+    <!-- Mobil menü -->
+    <div id="mobileMenu" class="hidden lg:hidden px-4 pt-2 pb-4 flex flex-col gap-3">
+        <a href="#bu-hafta"   class="text-white font-medium">Bülten</a>
+        <a href="duyurular.html" class="text-white font-medium">Duyurular</a>
+        <a href="blog.html"       class="text-white font-medium">Blog</a>
+        <a href="hakkimizda.html" class="text-white font-medium">Hakkımızda</a>
+        <a href="komiteler.html"  class="text-gray-200 hover:text-white text-sm font-medium transition-colors">Komiteler</a>        
+        <a href="ekibimiz.html"   class="text-white font-medium">Ekibimiz</a>
+        <a href="iletisim.html"   class="text-white font-medium">İletişim</a>
+        <button id="darkModeBtnMobile" class="text-2xl bg-transparent border-none cursor-pointer text-white w-fit">🌙</button>
+    </div>
+</nav>
+
+    <!-- HERO -->
+<header id="vanta-hero" class="text-white text-center py-24">
+    <div class="max-w-7xl mx-auto px-4">
+        <h1 class="text-4xl font-extrabold mb-4">HSD Gelişim'e Hoş Geldiniz</h1>
+        <p class="text-xl text-blue-100">Geleceği birlikte inşa ediyoruz.</p>
+    </div>
+</header>
+
+    <!-- EKİBİMİZ -->
+    <section id="ekibimiz" class="py-20 bg-white scroll-mt-20">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-2">Ekibimiz</h2>
+            <p class="text-center text-gray-400 mb-4">Topluluğumuzu yöneten harika insanlar</p>
+            <div class="w-12 h-1 bg-blue-800 mx-auto mb-16 rounded"></div>
+
+            <!-- ELÇİ -->
+            <div class="flex items-center gap-4 mb-8">
+                <div class="flex-1 h-px bg-gradient-to-r from-transparent to-gray-200"></div>
+                <span class="bg-yellow-100 text-yellow-700 text-xs font-bold px-4 py-2 rounded-full uppercase tracking-widest">Elçi</span>
+                <div class="flex-1 h-px bg-gradient-to-l from-transparent to-gray-200"></div>
+            </div>
+            <div class="flex justify-center mb-12">
+                <div class="bg-white border-2 border-yellow-400 rounded-2xl p-8 text-center w-64 relative shadow-yellow-100 shadow-lg hover:-translate-y-2 transition-transform">
+                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-yellow-400 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">★</div>
+                    <div class="w-24 h-24 rounded-full border-4 border-yellow-400 overflow-hidden mx-auto mb-4">
+                        <img src="nurgul.jpeg" alt="Elçi" class="w-full h-full object-cover">
+                    </div>
+                    <h5 class="font-bold text-blue-900">Nurgül Yıldız</h5>
+                    <span class="bg-yellow-100 text-yellow-700 text-xs font-semibold px-3 py-1 rounded-full mt-2 inline-block">Elçi</span>
+                </div>
+            </div>
+
+            <!-- ELÇİ YARDIMCILARI -->
+            <div class="flex items-center gap-4 mb-8">
+                <div class="flex-1 h-px bg-gradient-to-r from-transparent to-gray-200"></div>
+                <span class="bg-blue-100 text-blue-800 text-xs font-bold px-4 py-2 rounded-full uppercase tracking-widest">Elçi Yardımcıları</span>
+                <div class="flex-1 h-px bg-gradient-to-l from-transparent to-gray-200"></div>
+            </div>
+            <div class="flex justify-center gap-6 mb-12 flex-wrap">
+                <div class="bg-white border border-blue-200 rounded-2xl p-6 text-center w-52 relative hover:-translate-y-2 transition-transform">
+                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-yellow-400 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">★</div>
+                    <div class="w-20 h-20 rounded-full border-3 border-blue-800 overflow-hidden mx-auto mb-4">
+                        <img src="furkanerden.jpeg" alt="Elçi Yardımcısı" class="w-full h-full object-cover">
+                    </div>
+                    <h5 class="font-bold text-blue-900 text-sm">Furkan Erden</h5>
+                    <span class="bg-blue-100 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full mt-2 inline-block">Elçi Yardımcısı</span>
+                </div>
+                <div class="bg-white border border-blue-200 rounded-2xl p-6 text-center w-52 relative hover:-translate-y-2 transition-transform">
+                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-yellow-400 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">★</div>
+                    <div class="w-20 h-20 rounded-full border-3 border-blue-800 overflow-hidden mx-auto mb-4">
+                        <img src="irmak.jpeg" alt="Elçi Yardımcısı" class="w-full h-full object-cover">
+                    </div>
+                    <h5 class="font-bold text-blue-900 text-sm">Irmak Gündüz</h5>
+                    <span class="bg-blue-100 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full mt-2 inline-block">Elçi Yardımcısı</span>
+                </div>
+            </div>
+
+            <!-- KULÜP BAŞKANLARI -->
+            <div class="flex items-center gap-4 mb-8">
+                <div class="flex-1 h-px bg-gradient-to-r from-transparent to-gray-200"></div>
+                <span class="bg-green-100 text-green-800 text-xs font-bold px-4 py-2 rounded-full uppercase tracking-widest">Kulüp Başkanları</span>
+                <div class="flex-1 h-px bg-gradient-to-l from-transparent to-gray-200"></div>
+            </div>
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white border border-teal-200 rounded-2xl p-6 text-center hover:-translate-y-2 transition-transform">
+                    <div class="w-20 h-20 rounded-full overflow-hidden mx-auto mb-4">
+                        <img src="alp.jpeg" alt="Başkan 1" class="w-full h-full object-cover">
+                    </div>
+                    <h5 class="font-bold text-blue-900 text-sm">Ali Alp Kocaoğlu</h5>
+                    <span class="bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full mt-2 inline-block">Web Sitesi Proje Lideri</span>
+                    <span class="block text-gray-400 text-xs italic mt-2">Kulüp 1</span>
+                </div>
+                <div class="bg-white border border-teal-200 rounded-2xl p-6 text-center hover:-translate-y-2 transition-transform">
+                    <div class="w-20 h-20 rounded-full overflow-hidden mx-auto mb-4">
+                        <img src="eren.jpeg" alt="Başkan 2" class="w-full h-full object-cover">
+                    </div>
+                    <h5 class="font-bold text-blue-900 text-sm">Eren Baksoy</h5>
+                    <span class="bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full mt-2 inline-block">Oyun Proje Lideri</span>
+                    <span class="block text-gray-400 text-xs italic mt-2">Kulüp 2</span>
+                </div>
+                <div class="bg-white border border-teal-200 rounded-2xl p-6 text-center hover:-translate-y-2 transition-transform">
+                    <div class="w-20 h-20 rounded-full overflow-hidden mx-auto mb-4">
+                        <img src="yaren.jpeg" alt="Başkan 3" class="w-full h-full object-cover">
+                    </div>
+                    <h5 class="font-bold text-blue-900 text-sm">Yaren Timur</h5>
+                    <span class="bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full mt-2 inline-block">Sosyal Medya Lideri</span>
+                    <span class="block text-gray-400 text-xs italic mt-2">Kulüp 3</span>
+                </div>
+                <div class="bg-white border border-teal-200 rounded-2xl p-6 text-center hover:-translate-y-2 transition-transform">
+                    <div class="w-20 h-20 rounded-full overflow-hidden mx-auto mb-4">
+                        <img src="damla.jpeg" alt="Başkan 4" class="w-full h-full object-cover">
+                    </div>
+                    <h5 class="font-bold text-blue-900 text-sm">Damla Muyan</h5>
+                    <span class="bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full mt-2 inline-block">Etkinlik Lideri</span>
+                    <span class="block text-gray-400 text-xs italic mt-2">Kulüp 4</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- FOOTER -->
+    <footer class="bg-[#04067c] text-white py-8 text-center">
+        <p class="text-sm text-blue-200">© 2025 HSD Gelişim – İstanbul Gelişim Üniversitesi</p>
+    </footer>
+
+    <!-- DARK MODE & MENÜ JS -->
+    <script>
+    // Dark mode
+        const html = document.documentElement;
+        const btns = [document.getElementById('darkModeBtn'), document.getElementById('darkModeBtnMobile')];
+        
+        // 'tema' anahtarını kullan (index.html ile aynı)
+        if (localStorage.getItem('tema') === 'dark') { 
+            html.classList.add('dark'); 
+            btns.forEach(b => b && (b.textContent = '☀️')); 
+        }
+        
+        btns.forEach(btn => btn && btn.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            const isDark = html.classList.contains('dark');
+            localStorage.setItem('tema', isDark ? 'dark' : 'light');
+            btns.forEach(b => b && (b.textContent = isDark ? '☀️' : '🌙'));
+            
+            // Vanta efekti varsa (ekibimiz sayfasında olmayabilir)
+            if (window._vantaEffect) {
+                window._vantaEffect.setOptions({
+                    backgroundColor: isDark ? 0x0d1117 : 0x04067c
+                });
+            }
+        }));
+
+        // Mobil menü
+    // MOBİL MENÜ
+    const menuBtn    = document.getElementById("menuBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
+    if (menuBtn) {
+        menuBtn.addEventListener("click", () => mobileMenu.classList.toggle("hidden"));
+        mobileMenu.querySelectorAll("a").forEach(a => a.addEventListener("click", () => mobileMenu.classList.add("hidden")));
+    }
+        
+    </script>
+</body>
+</html>

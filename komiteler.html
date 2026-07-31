@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Komiteler — HSD Gelişim</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { darkMode: 'class' }</script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root { --navy: #04067c; }
+        body { font-family: 'Inter', sans-serif; background: #f3f4f6; transition: background 0.3s; }
+        html.dark body { background: #0d1117; color: #e0e0e0; }
+
+        nav { transition: padding 0.35s ease, box-shadow 0.35s ease; }
+        nav.nav-scrolled {
+            padding-top: 8px !important; padding-bottom: 8px !important;
+            box-shadow: 0 4px 28px rgba(0,0,0,0.45);
+            background-color: rgba(4,6,124,0.92) !important;
+            backdrop-filter: blur(14px);
+        }
+
+        /* HERO */
+        .hero-komiteler {
+            background: linear-gradient(135deg, #0d6efd 0%, #0028a5 60%, #04067c 100%);
+            position: relative; overflow: hidden;
+        }
+        .hero-komiteler::before {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(circle at 70% 50%, rgba(255,255,255,0.06) 0%, transparent 60%);
+        }
+        .hero-dots {
+            position: absolute; inset: 0;
+            background-image: radial-gradient(rgba(255,255,255,0.15) 1px, transparent 1px);
+            background-size: 28px 28px;
+            mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
+        }
+
+        /* KOMİTE KARTI */
+        .komite-kart {
+            transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease;
+        }
+        .komite-kart:hover { transform: translateY(-8px); }
+
+        html.dark .komite-kart-inner {
+            background: #1a1e23 !important;
+            border-color: #2d3748 !important;
+        }
+        html.dark .komite-kart-inner h3 { color: #f0f6ff !important; }
+        html.dark .komite-kart-inner p  { color: #8a9abb !important; }
+        html.dark #komiteler-section     { background: #0d1117 !important; }
+        html.dark #komiteler-section h2  { color: #f0f6ff !important; }
+
+        /* SCROLL TOP */
+        #scrollTop {
+            position: fixed; bottom: 28px; right: 28px;
+            width: 44px; height: 44px;
+            background: var(--navy); color: white; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; box-shadow: 0 4px 16px rgba(0,40,165,0.35);
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.3s, transform 0.3s; z-index: 100;
+        }
+        #scrollTop.visible { opacity: 1; pointer-events: all; }
+        #scrollTop:hover { transform: translateY(-3px); }
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR — tüm sayfalarda kullanın -->
+<nav class="bg-[#04067c] sticky top-0 z-50 py-4">
+    <div class="max-w-7xl mx-auto px-4 flex items-center justify-between">
+        <a href="index.html" class="flex items-center gap-2">
+            <img src="hsd-logo-white.png" alt="HSD Logo" class="h-10" onerror="this.style.display='none'">
+        </a>
+
+        <button id="menuBtn" class="text-white lg:hidden focus:outline-none">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+        </button>
+
+        <div class="hidden lg:flex items-center gap-6">
+            <ul class="flex items-center gap-6">
+                <li><a href="index.html#bu-hafta"   class="text-white font-medium hover:text-gray-300 transition">Bülten</a></li>
+                <li><a href="duyurular.html"         class="text-white font-medium hover:text-gray-300 transition">Duyurular</a></li>
+                <li><a href="blog.html"              class="text-white font-medium hover:text-gray-300 transition">Blog</a></li>
+                <li><a href="hakkimizda.html"        class="text-white font-medium hover:text-gray-300 transition">Hakkımızda</a></li>
+                <li><a href="komiteler.html"   class="text-white font-medium hover:text-gray-300 transition">Komiteler</a></li>
+                <li><a href="ekibimiz.html"    class="text-white font-medium hover:text-gray-300 transition">Ekibimiz</a></li>
+                <li><a href="iletisim.html"    class="text-white font-medium hover:text-gray-300 transition">İletişim</a></li>
+            </ul>
+            <a href="https://www.gelisim.edu.tr" target="_blank">
+                <img src="igu.png" alt="IGU Logo" class="h-10 ml-4" onerror="this.style.display='none'">
+            </a>
+            <button id="darkModeBtn" class="text-2xl bg-transparent border-none cursor-pointer ml-2">🌙</button>
+        </div>
+    </div>
+
+    <div id="mobileMenu" class="hidden lg:hidden px-4 pt-2 pb-4 flex flex-col gap-3">
+        <a href="index.html#bu-hafta"  class="text-white font-medium">Bülten</a>
+        <a href="duyurular.html"       class="text-white font-medium">Duyurular</a>
+        <a href="blog.html"            class="text-white font-medium">Blog</a>
+        <a href="hakkimizda.html"      class="text-white font-medium">Hakkımızda</a>
+        <a href="komiteler.html"      class="text-white font-medium">Komiteler</a>
+        <a href="ekibimiz.html"  class="text-white font-medium">Ekibimiz</a>
+        <a href="iletisim.html"  class="text-white font-medium">İletişim</a>
+        <button id="darkModeBtnMobile" class="text-2xl bg-transparent border-none cursor-pointer text-white w-fit">🌙</button>
+    </div>
+</nav>
+
+    <!-- Mobil menü -->
+    <div id="mobileMenu" class="hidden lg:hidden px-4 pt-2 pb-4 flex flex-col gap-3">
+        <a href="#bu-hafta"   class="text-white font-medium">Bülten</a>
+        <a href="duyurular.html" class="text-white font-medium">Duyurular</a>
+        <a href="blog.html"       class="text-white font-medium">Blog</a>
+        <a href="hakkimizda.html" class="text-white font-medium">Hakkımızda</a>
+        <a href="komiteler.html"  class="text-gray-200 hover:text-white text-sm font-medium transition-colors">Komiteler</a>        
+        <a href="ekibimiz.html"   class="text-white font-medium">Ekibimiz</a>
+        <a href="iletisim.html"   class="text-white font-medium">İletişim</a>
+        <button id="darkModeBtnMobile" class="text-2xl bg-transparent border-none cursor-pointer text-white w-fit">🌙</button>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero-komiteler py-20 text-white text-center relative">
+    <div class="hero-dots"></div>
+    <div class="max-w-3xl mx-auto px-4 relative z-10">
+        <span class="inline-block bg-white/10 border border-white/20 text-white text-xs font-semibold px-4 py-1.5 rounded-full mb-5 animate__animated animate__fadeInDown">
+            🏛️ HSD Gelişim
+        </span>
+        <h1 class="text-4xl md:text-5xl font-extrabold mb-4 animate__animated animate__fadeInUp">
+            Komitelerimiz
+        </h1>
+        <p class="text-blue-100 text-lg animate__animated animate__fadeInUp animate__delay-1s">
+            HSD Gelişim'i ayakta tutan 5 aktif komitemizle tanışın.
+        </p>
+    </div>
+</section>
+
+<!-- KOMİTELER -->
+<section id="komiteler-section" class="py-20 bg-gray-100">
+    <div class="max-w-7xl mx-auto px-4">
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+            <!-- Sosyal Medya -->
+            <div class="komite-kart" data-aos="fade-up" data-aos-delay="0">
+                <div class="komite-kart-inner bg-white border border-gray-200 rounded-3xl p-8 flex flex-col h-full shadow-sm">
+                    <div class="flex items-center gap-5 mb-6">
+                        <div class="w-16 h-16 rounded-2xl flex items-center justify-center text-4xl bg-pink-500/10 group-hover:scale-110 transition-transform">📱</div>
+                        <h3 class="text-gray-900 text-2xl font-bold leading-snug">Sosyal Medya <br><span class="text-gray-500 font-medium text-lg">& İçerik</span></h3>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed flex-1">
+                        HSD Gelişim'in dijital sesini yönetir. Instagram, LinkedIn ve diğer platformlarda özgün görsel ve video içerikler üreterek topluluğumuzun erişimini genişletir.
+                    </p>
+                    <div class="mt-6 pt-5 border-t border-gray-100">
+                        <a href="komite-detay.html?komite=sosyal-medya"
+                           class="inline-flex items-center gap-2 text-pink-500 font-bold text-sm hover:gap-3 transition-all">
+                            Ekibi Gör
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Organizasyon -->
+            <div class="komite-kart" data-aos="fade-up" data-aos-delay="100">
+                <div class="komite-kart-inner bg-white border border-gray-200 rounded-3xl p-8 flex flex-col h-full shadow-sm">
+                    <div class="flex items-center gap-5 mb-6">
+                        <div class="w-16 h-16 rounded-2xl flex items-center justify-center text-4xl bg-green-500/10">🎪</div>
+                        <h3 class="text-gray-900 text-2xl font-bold leading-snug">Organizasyon <br><span class="text-gray-500 font-medium text-lg">& Etkinlik</span></h3>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed flex-1">
+                        Konferanslardan workshoplara, networking gecelerinden teknik zirvelere kadar tüm HSD etkinliklerinin kusursuzca planlanması ve yürütülmesini sağlar.
+                    </p>
+                    <div class="mt-6 pt-5 border-t border-gray-100">
+                        <a href="komite-detay.html?komite=organizasyon"
+                           class="inline-flex items-center gap-2 text-green-500 font-bold text-sm hover:gap-3 transition-all">
+                            Ekibi Gör
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sponsorluk -->
+            <div class="komite-kart" data-aos="fade-up" data-aos-delay="200">
+                <div class="komite-kart-inner bg-white border border-gray-200 rounded-3xl p-8 flex flex-col h-full shadow-sm">
+                    <div class="flex items-center gap-5 mb-6">
+                        <div class="w-16 h-16 rounded-2xl flex items-center justify-center text-4xl bg-yellow-500/10">🤝</div>
+                        <h3 class="text-gray-900 text-2xl font-bold leading-snug">Sponsorluk <br><span class="text-gray-500 font-medium text-lg">& Dış İlişkiler</span></h3>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed flex-1">
+                        Sektördeki firmalar ve kurumlarla stratejik ortaklıklar kurar. Etkinlikler ve projeler için sponsorluk süreçlerini yöneterek topluluğun sürdürülebilirliğini sağlar.
+                    </p>
+                    <div class="mt-6 pt-5 border-t border-gray-100">
+                        <a href="komite-detay.html?komite=sponsorluk"
+                           class="inline-flex items-center gap-2 text-yellow-500 font-bold text-sm hover:gap-3 transition-all">
+                            Ekibi Gör
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Teknik -->
+            <div class="komite-kart" data-aos="fade-up" data-aos-delay="0">
+                <div class="komite-kart-inner bg-white border border-gray-200 rounded-3xl p-8 flex flex-col h-full shadow-sm">
+                    <div class="flex items-center gap-5 mb-6">
+                        <div class="w-16 h-16 rounded-2xl flex items-center justify-center text-4xl bg-indigo-500/10">💻</div>
+                        <h3 class="text-gray-900 text-2xl font-bold leading-snug">Teknik Ekip <br><span class="text-gray-500 font-medium text-lg">& Ar-Ge</span></h3>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed flex-1">
+                        HSD'nin dijital altyapısını geliştirir. Hackathonlar organize eder ve üyelere teknik mentorluk sunarak yazılım kültürünü destekler.
+                    </p>
+                    <div class="mt-6 pt-5 border-t border-gray-100">
+                        <a href="komite-detay.html?komite=teknik"
+                           class="inline-flex items-center gap-2 text-indigo-500 font-bold text-sm hover:gap-3 transition-all">
+                            Ekibi Gör
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Medium -->
+            <div class="komite-kart" data-aos="fade-up" data-aos-delay="100">
+                <div class="komite-kart-inner bg-white border border-gray-200 rounded-3xl p-8 flex flex-col h-full shadow-sm">
+                    <div class="flex items-center gap-5 mb-6">
+                        <div class="w-16 h-16 rounded-2xl flex items-center justify-center text-4xl bg-teal-500/10">✍️</div>
+                        <h3 class="text-gray-900 text-2xl font-bold leading-snug">Medium İçerik <br><span class="text-gray-500 font-medium text-lg">& Üretim</span></h3>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed flex-1">
+                        HSD üyelerinin teknik tecrübelerini ve proje deneyimlerini profesyonel makalelere dönüştürür. Bilgi birikimini global kitleye sunar.
+                    </p>
+                    <div class="mt-6 pt-5 border-t border-gray-100">
+                        <a href="komite-detay.html?komite=medium"
+                           class="inline-flex items-center gap-2 text-teal-500 font-bold text-sm hover:gap-3 transition-all">
+                            Ekibi Gör
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- SCROLL TOP -->
+<button id="scrollTop" aria-label="Yukarı çık">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/>
+    </svg>
+</button>
+
+<!-- FOOTER -->
+<footer class="bg-[#04067c] text-white py-10">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
+        <p class="text-sm text-blue-200">© 2025 HSD Gelişim — Tüm hakları saklıdır.</p>
+        <div class="flex items-center gap-5">
+            <a href="https://www.instagram.com/hsdgelisim/" target="_blank" class="text-blue-200 hover:text-white transition text-sm">Instagram</a>
+            <a href="https://www.linkedin.com/company/hsdigu/" target="_blank" class="text-blue-200 hover:text-white transition text-sm">LinkedIn</a>
+            <a href="mailto:hsd.iguu@gmail.com" class="text-blue-200 hover:text-white transition text-sm">E-posta</a>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    AOS.init({ duration: 700, once: true, offset: 60, easing: 'ease-out-cubic' });
+
+    gsap.registerPlugin(ScrollTrigger);
+    ScrollTrigger.create({
+        start: "top -60",
+        onEnter:     () => document.querySelector('nav').classList.add('nav-scrolled'),
+        onLeaveBack: () => document.querySelector('nav').classList.remove('nav-scrolled')
+    });
+
+    // DARK MODE
+    const darkBtn       = document.getElementById("darkModeBtn");
+    const darkBtnMobile = document.getElementById("darkModeBtnMobile");
+    const html          = document.documentElement;
+
+    function applyTheme(isDark) {
+        html.classList.toggle("dark", isDark);
+        const icon = isDark ? "☀️" : "🌙";
+        if (darkBtn)       darkBtn.textContent       = icon;
+        if (darkBtnMobile) darkBtnMobile.textContent = icon;
+        localStorage.setItem("tema", isDark ? "dark" : "light");
+    }
+    applyTheme(localStorage.getItem("tema") === "dark");
+    if (darkBtn)       darkBtn.addEventListener("click", () => applyTheme(!html.classList.contains("dark")));
+    if (darkBtnMobile) darkBtnMobile.addEventListener("click", () => applyTheme(!html.classList.contains("dark")));
+
+    // MOBİL MENÜ
+    const menuBtn    = document.getElementById("menuBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
+    if (menuBtn) {
+        menuBtn.addEventListener("click", () => mobileMenu.classList.toggle("hidden"));
+        mobileMenu.querySelectorAll("a").forEach(a => a.addEventListener("click", () => mobileMenu.classList.add("hidden")));
+    }
+
+    // SCROLL TOP
+    const scrollTopBtn = document.getElementById("scrollTop");
+    window.addEventListener("scroll", () => scrollTopBtn.classList.toggle("visible", window.scrollY > 300));
+    scrollTopBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+});
+</script>
+</body>
+</html>

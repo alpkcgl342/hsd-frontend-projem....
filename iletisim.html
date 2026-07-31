@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Duyurular — HSD Gelişim</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { darkMode: 'class' }</script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --navy: #04067c;
+            --blue: #0028a5;
+            --accent: #0d6efd;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f3f4f6;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        html.dark body { background: #0d1117; color: #e0e0e0; }
+
+        /* NAV */
+        nav { transition: padding 0.35s ease, box-shadow 0.35s ease; }
+        nav.nav-scrolled {
+            padding-top: 8px !important; padding-bottom: 8px !important;
+            box-shadow: 0 4px 28px rgba(0,0,0,0.45);
+            background-color: rgba(4,6,124,0.92) !important;
+            backdrop-filter: blur(14px);
+        }
+
+        /* HERO */
+        .hero-duyuru {
+            background: linear-gradient(135deg, #0d6efd 0%, #0028a5 60%, #04067c 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-duyuru::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: radial-gradient(circle at 70% 50%, rgba(255,255,255,0.06) 0%, transparent 60%);
+        }
+        .hero-dots {
+            position: absolute; inset: 0;
+            background-image: radial-gradient(rgba(255,255,255,0.15) 1px, transparent 1px);
+            background-size: 28px 28px;
+            mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
+        }
+
+        /* SEARCH */
+        .search-wrap { position: relative; }
+        .search-wrap svg {
+            position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
+            color: #9ca3af; pointer-events: none;
+        }
+        #searchInput {
+            padding-left: 46px !important;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        #searchInput:focus {
+            border-color: var(--accent) !important;
+            box-shadow: 0 0 0 3px rgba(13,110,253,0.15) !important;
+            outline: none;
+        }
+
+        /* FILTER PILLS */
+        .filtre-btn {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        .filtre-btn:hover { transform: translateY(-1px); }
+        .filtre-btn.aktif {
+            background-color: var(--navy) !important;
+            color: #fff !important;
+            border-color: var(--navy) !important;
+        }
+
+        html.dark .filtre-btn {
+            background: #1e2530; color: #cbd5e0; border-color: #444c56;
+        }
+        html.dark .filtre-btn.aktif {
+            background-color: var(--navy) !important;
+            color: #fff !important;
+            border-color: #7eb3ff !important;
+        }
+
+        /* KART */
+        .duyuru-kart {
+            transition: transform 0.28s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.28s ease;
+        }
+        .duyuru-kart:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 40px rgba(0,40,165,0.14);
+        }
+        .duyuru-kart.gizli { display: none; }
+
+        html.dark .duyuru-kart {
+            background: #1c2333 !important;
+            border-color: #2d3748 !important;
+        }
+
+        /* Kart içi metin renkleri — Tailwind utility override */
+        html.dark .duyuru-kart h3,
+        html.dark .duyuru-kart .title,
+        html.dark .duyuru-kart [class*="text-gray-8"],
+        html.dark .duyuru-kart [class*="text-gray-9"] {
+            color: #e8f0ff !important;
+        }
+
+        html.dark .duyuru-kart p,
+        html.dark .duyuru-kart .body,
+        html.dark .duyuru-kart [class*="text-gray-5"],
+        html.dark .duyuru-kart [class*="text-gray-6"] {
+            color: #9baec8 !important;
+        }
+
+        html.dark .duyuru-kart [class*="text-gray-4"] {
+            color: #5d7290 !important;
+        }
+
+        html.dark .duyuru-kart a[class*="text-blue"] {
+            color: #60a5fa !important;
+        }
+
+        html.dark .duyuru-kart [class*="border-t"] {
+            border-color: #2d3d55 !important;
+        }
+
+        /* BADGE RENKLERI */
+        .badge-etkinlik  { background: #dbeafe; color: #1d4ed8; }
+        .badge-duyuru    { background: #dcfce7; color: #15803d; }
+        .badge-egitim    { background: #fef9c3; color: #854d0e; }
+        .badge-proje     { background: #fce7f3; color: #9d174d; }
+
+        html.dark .badge-etkinlik  { background: #1e3a5f; color: #93c5fd; }
+        html.dark .badge-duyuru    { background: #14532d; color: #86efac; }
+        html.dark .badge-egitim    { background: #422006; color: #fde68a; }
+        html.dark .badge-proje     { background: #500724; color: #f9a8d4; }
+
+        /* SAYFALAMA */
+        .page-btn {
+            width: 38px; height: 38px;
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.875rem; font-weight: 600;
+            cursor: pointer; transition: all 0.18s;
+            border: 1px solid #e5e7eb;
+            background: #fff; color: #374151;
+        }
+        .page-btn:hover  { background: #e8ecff; border-color: var(--accent); color: var(--navy); }
+        .page-btn.aktif  { background: var(--navy); color: #fff; border-color: var(--navy); }
+        html.dark .page-btn { background: #1e2530; border-color: #2d3748; color: #cbd5e0; }
+        html.dark .page-btn.aktif { background: var(--navy); color: #fff; }
+
+        /* EMPTY */
+        #bos-mesaj { display: none; }
+
+        /* DARK SECTION */
+        html.dark #duyuru-alani { background: #0d1117 !important; }
+
+        /* SCROLL TOP */
+        #scrollTop {
+            position: fixed; bottom: 28px; right: 28px;
+            width: 44px; height: 44px;
+            background: var(--navy); color: white;
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(0,40,165,0.35);
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.3s, transform 0.3s;
+            z-index: 100;
+        }
+        #scrollTop.visible { opacity: 1; pointer-events: all; }
+        #scrollTop:hover   { transform: translateY(-3px); }
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR — tüm sayfalarda kullanın -->
+<nav class="bg-[#04067c] sticky top-0 z-50 py-4">
+    <div class="max-w-7xl mx-auto px-4 flex items-center justify-between">
+        <a href="index.html" class="flex items-center gap-2">
+            <img src="hsd-logo-white.png" alt="HSD Logo" class="h-10" onerror="this.style.display='none'">
+        </a>
+
+        <button id="menuBtn" class="text-white lg:hidden focus:outline-none">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+        </button>
+
+        <div class="hidden lg:flex items-center gap-6">
+            <ul class="flex items-center gap-6">
+                <li><a href="index.html#bu-hafta"   class="text-white font-medium hover:text-gray-300 transition">Bülten</a></li>
+                <li><a href="duyurular.html"         class="text-white font-medium hover:text-gray-300 transition">Duyurular</a></li>
+                <li><a href="blog.html"              class="text-white font-medium hover:text-gray-300 transition">Blog</a></li>
+                <li><a href="hakkimizda.html"        class="text-white font-medium hover:text-gray-300 transition">Hakkımızda</a></li>
+                <li><a href="komiteler.html"   class="text-white font-medium hover:text-gray-300 transition">Komiteler</a></li>
+                <li><a href="ekibimiz.html"    class="text-white font-medium hover:text-gray-300 transition">Ekibimiz</a></li>
+                <li><a href="iletisim.html"    class="text-white font-medium hover:text-gray-300 transition">İletişim</a></li>
+            </ul>
+            <a href="https://www.gelisim.edu.tr" target="_blank">
+                <img src="igu.png" alt="IGU Logo" class="h-10 ml-4" onerror="this.style.display='none'">
+            </a>
+            <button id="darkModeBtn" class="text-2xl bg-transparent border-none cursor-pointer ml-2">🌙</button>
+        </div>
+    </div>
+
+    <div id="mobileMenu" class="hidden lg:hidden px-4 pt-2 pb-4 flex flex-col gap-3">
+        <a href="index.html#bu-hafta"  class="text-white font-medium">Bülten</a>
+        <a href="duyurular.html"       class="text-white font-medium">Duyurular</a>
+        <a href="blog.html"            class="text-white font-medium">Blog</a>
+        <a href="hakkimizda.html"      class="text-white font-medium">Hakkımızda</a>
+        <a href="komiteler.html"      class="text-white font-medium">Komiteler</a>
+        <a href="ekibimiz.html"  class="text-white font-medium">Ekibimiz</a>
+        <a href="iletisim.html"  class="text-white font-medium">İletişim</a>
+        <button id="darkModeBtnMobile" class="text-2xl bg-transparent border-none cursor-pointer text-white w-fit">🌙</button>
+    </div>
+</nav>
+
+    <!-- Mobil menü -->
+    <div id="mobileMenu" class="hidden lg:hidden px-4 pt-2 pb-4 flex flex-col gap-3">
+        <a href="#bu-hafta"   class="text-white font-medium">Bülten</a>
+        <a href="duyurular.html" class="text-white font-medium">Duyurular</a>
+        <a href="blog.html"       class="text-white font-medium">Blog</a>
+        <a href="hakkimizda.html" class="text-white font-medium">Hakkımızda</a>
+        <a href="komiteler.html"  class="text-gray-200 hover:text-white text-sm font-medium transition-colors">Komiteler</a>        
+        <a href="ekibimiz.html"   class="text-white font-medium">Ekibimiz</a>
+        <a href="iletisim.html"   class="text-white font-medium">İletişim</a>
+        <button id="darkModeBtnMobile" class="text-2xl bg-transparent border-none cursor-pointer text-white w-fit">🌙</button>
+    </div>
+</nav>
+
+    <!-- Mobil menü -->
+    <div id="mobileMenu" class="hidden lg:hidden px-4 pt-2 pb-4 flex flex-col gap-3">
+        <a href="#bu-hafta"   class="text-white font-medium">Bülten</a>
+        <a href="duyurular.html" class="text-white font-medium">Duyurular</a>
+        <a href="blog.html"       class="text-white font-medium">Blog</a>
+        <a href="hakkimizda.html" class="text-white font-medium">Hakkımızda</a>
+        <a href="komiteler.html"  class="text-gray-200 hover:text-white text-sm font-medium transition-colors">Komiteler</a>        
+        <a href="ekibimiz.html"   class="text-white font-medium">Ekibimiz</a>
+        <a href="#iletisim"   class="text-white font-medium">İletişim</a>
+        <button id="darkModeBtnMobile" class="text-2xl bg-transparent border-none cursor-pointer text-white w-fit">🌙</button>
+    </div>
+</nav>
+
+    <!-- İLETİŞİM -->
+    <section id="iletisim" class="py-20 bg-gray-100 dark:bg-[#0d1117] scroll-mt-20">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-4 text-gray-900 dark:text-white" data-aos="fade-up">İletişim</h2>
+            <div class="w-12 h-1 bg-blue-800 mx-auto mb-12 rounded" data-aos="fade-up" data-aos-delay="100"></div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+
+                <!-- Sol: Bilgi Kartı -->
+                <div class="bg-white dark:bg-[#1a1e23] border border-gray-200 dark:border-gray-800 rounded-3xl p-8 flex flex-col gap-5" data-aos="fade-right" data-aos-delay="150">
+                    <h3 class="text-gray-900 dark:text-white text-xl font-bold mb-2">Bize Ulaşın</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Topluluğumuzu takip etmek veya iletişime geçmek için aşağıdaki kanalları kullanabilirsiniz.
+                    </p>
+
+                    <a href="mailto:hsd.iguu@gmail.com"
+                       class="flex items-center gap-3 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition group">
+                        <span class="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-400 group-hover:bg-blue-500/20 transition">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25H4.5a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5H4.5a2.25 2.25 0 00-2.25 2.25m19.5 0l-9.75 6.75L2.25 6.75"/>
+                            </svg>
+                        </span>
+                        <span class="text-sm">Gmail / HSD İGÜ</span>
+                    </a>
+
+                    <a href="https://www.linkedin.com/company/hsdigu/" target="_blank"
+                       class="flex items-center gap-3 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition group">
+                        <span class="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-500 group-hover:bg-blue-700/20 transition">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M20.447 20.452H17.21v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.984V9h3.102v1.561h.043c.432-.818 1.487-1.681 3.059-1.681 3.271 0 3.874 2.152 3.874 4.951v6.621zM5.337 7.433a1.8 1.8 0 110-3.6 1.8 1.8 0 010 3.6zM6.959 20.452H3.713V9h3.246v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                            </svg>
+                        </span>
+                        <span class="text-sm">LinkedIn / HSD İGÜ</span>
+                    </a>
+
+                    <a href="https://www.instagram.com/hsdgelisim/" target="_blank"
+                       class="flex items-center gap-3 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition group">
+                        <span class="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center text-pink-400 group-hover:bg-blue-500/20 transition">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>                            </svg>
+                        </span>
+                        <span class="text-sm">Instagram / HSD İGÜ</span>
+                    </a>
+
+                    <a href="https://www.tiktok.com/@hsdgelisim?_r=1&_t=ZS-96UDTTX7VZd" target="_blank"
+                       class="flex items-center gap-3 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition group">
+                        <span class="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center text-red-400 group-hover:bg-blue-500/20 transition">
+                           <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.01 1.63 4.15 1.13 1.22 2.69 1.95 4.34 2.11v3.91c-1.63-.04-3.23-.55-4.58-1.48-.48-.33-.92-.72-1.3-1.16v6.94c0 1.92-.5 3.79-1.54 5.31-1.39 1.96-3.6 3.19-6.03 3.22-2.31.06-4.6-1.02-5.96-2.89C1.72 18.23 1.15 15.68 2 13.25c.67-1.99 2.22-3.64 4.19-4.38.74-.27 1.53-.41 2.32-.41v4.03c-.45-.01-.91.07-1.33.24-.95.38-1.67 1.25-1.85 2.26-.26 1.34.45 2.72 1.7 3.23.95.42 2.06.27 2.87-.39.55-.44.89-1.1 1.01-1.79.08-.43.09-.87.09-1.31V0l.44.02z"/>
+                            </svg>
+                        </span>
+                        <span class="text-sm">TikTok / HSD İGÜ</span>
+                    </a>
+
+                    <div class="flex flex-col gap-3">
+                        <div class="flex items-center gap-3 text-gray-500 dark:text-gray-400">
+                            <span class="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-500">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                    <path fill-rule="evenodd" d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-2.083 3.204-4.511 3.204-7.327a8.5 8.5 0 10-17 0c0 2.816 1.26 5.244 3.204 7.327a19.58 19.58 0 002.682 2.282 16.975 16.975 0 001.145.742zM12 13.5a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/>
+                                </svg>
+                            </span>
+                            <span class="text-sm">İstanbul Gelişim Üniversitesi, Avcılar</span>
+                        </div>
+                        <div class="rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-700">
+                            <iframe
+                                src="https://maps.google.com/maps?q=İstanbul+Gelişim+Üniversitesi,+Avcılar,+İstanbul&output=embed&z=16"
+                                width="100%"
+                                height="500"
+                                style="border:0;"
+                                allowfullscreen=""
+                                loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sağ: Form -->
+                <div class="bg-white dark:bg-[#1a1e23] rounded-3xl p-8 border border-gray-200 dark:border-gray-700" data-aos="fade-left" data-aos-delay="150">
+                    <form id="iletisimForm" novalidate>
+                        <div class="mb-5">
+                            <label for="adSoyad" class="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">Ad Soyad</label>
+                            <input type="text" id="adSoyad" placeholder="Adınız Soyadınız"
+                                class="w-full border border-gray-300 dark:border-gray-600 rounded-xl px-4 py-3 
+                                bg-white dark:bg-[#2d333b] text-gray-900 dark:text-white 
+                                placeholder-gray-400 dark:placeholder-gray-500
+                                focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition">                            <div class="text-red-500 text-sm mt-1 hidden" id="adSoyadHata"></div>
+                        </div>
+                        <div class="mb-5">
+                            <label for="email" class="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">E-posta Adresi</label>
+                            <input type="email" id="email" placeholder="ornek@mail.com"
+                                class="w-full border border-gray-300 dark:border-gray-600 rounded-xl px-4 py-3 
+                                       bg-white dark:bg-[#2d333b] text-gray-900 dark:text-white 
+                                       placeholder-gray-400 dark:placeholder-gray-500
+                                       focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition">
+                            <div class="text-red-500 text-sm mt-1 hidden" id="emailHata"></div>
+                        </div>
+                        <div class="mb-5">
+                            <label for="konu" class="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">Konu Başlığı</label>
+                            <input type="text" id="konu" placeholder="Konu başlığınız"
+                                class="w-full border border-gray-300 dark:border-gray-600 rounded-xl px-4 py-3 
+                                       bg-white dark:bg-[#2d333b] text-gray-900 dark:text-white 
+                                       placeholder-gray-400 dark:placeholder-gray-500
+                                       focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition">
+                            <div class="text-red-500 text-sm mt-1 hidden" id="konuHata"></div>
+                        </div>
+                        <div class="mb-5">
+                            <label for="mesaj" class="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">Mesaj</label>
+                            <textarea id="mesaj" rows="5" placeholder="Mesajınızı buraya yazın..."
+                                class="w-full border border-gray-300 dark:border-gray-600 rounded-xl px-4 py-3 
+                                       bg-white dark:bg-[#2d333b] text-gray-900 dark:text-white 
+                                       placeholder-gray-400 dark:placeholder-gray-500
+                                       focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition"></textarea>
+                            <div class="text-red-500 text-sm mt-1 hidden" id="mesajHata"></div>
+                        </div>
+                        <button type="submit" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-bold py-3 rounded-xl transition">Gönder</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+</main>
+
+
+<!-- SCROLL TOP -->
+<button id="scrollTop" aria-label="Yukarı çık">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/>
+    </svg>
+</button>
+
+<!-- FOOTER -->
+<footer class="bg-[#04067c] text-white py-10 mt-0">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
+        <p class="text-sm text-blue-200">© 2025 HSD Gelişim — Tüm hakları saklıdır.</p>
+        <div class="flex items-center gap-5">
+            <a href="https://www.instagram.com/hsdgelisim/" target="_blank" class="text-blue-200 hover:text-white transition text-sm">Instagram</a>
+            <a href="https://www.linkedin.com/company/hsdigu/" target="_blank" class="text-blue-200 hover:text-white transition text-sm">LinkedIn</a>
+            <a href="mailto:hsd.iguu@gmail.com" class="text-blue-200 hover:text-white transition text-sm">E-posta</a>
+        </div>
+    </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    // AOS
+    AOS.init({ duration: 700, once: true, offset: 60, easing: 'ease-out-cubic' });
+
+    // GSAP sticky nav
+    gsap.registerPlugin(ScrollTrigger);
+    ScrollTrigger.create({
+        start: "top -60",
+        onEnter:     () => document.querySelector('nav').classList.add('nav-scrolled'),
+        onLeaveBack: () => document.querySelector('nav').classList.remove('nav-scrolled')
+    });
+
+    // DARK MODE
+    const darkBtn = document.getElementById("darkModeBtn");
+    const darkBtnMobile = document.getElementById("darkModeBtnMobile");
+    const html = document.documentElement;
+
+    function applyTheme(isDark) {
+        html.classList.toggle("dark", isDark);
+        const icon = isDark ? "☀️" : "🌙";
+        if (darkBtn)       darkBtn.textContent = icon;
+        if (darkBtnMobile) darkBtnMobile.textContent = icon;
+        localStorage.setItem("tema", isDark ? "dark" : "light");
+    }
+    applyTheme(localStorage.getItem("tema") === "dark");
+    if (darkBtn)       darkBtn.addEventListener("click", () => applyTheme(!html.classList.contains("dark")));
+    if (darkBtnMobile) darkBtnMobile.addEventListener("click", () => applyTheme(!html.classList.contains("dark")));
+
+    // MOBİL MENU
+    const menuBtn = document.getElementById("menuBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
+    if (menuBtn) {
+        menuBtn.addEventListener("click", () => mobileMenu.classList.toggle("hidden"));
+        mobileMenu.querySelectorAll("a").forEach(a => a.addEventListener("click", () => mobileMenu.classList.add("hidden")));
+    }
+
+    // KARTLAR & SAYAÇLAR
+    const kartlar = Array.from(document.querySelectorAll(".duyuru-kart"));
+
+    function sayaclariGuncelle(gorunenler) {
+        document.getElementById("toplamSayi").textContent  = gorunenler.length;
+        document.getElementById("etkinlikSayi").textContent = gorunenler.filter(k => k.dataset.kategori === "etkinlik").length;
+        document.getElementById("egitimSayi").textContent  = gorunenler.filter(k => k.dataset.kategori === "egitim").length;
+        document.getElementById("projeSayi").textContent   = gorunenler.filter(k => k.dataset.kategori === "proje").length;
+    }
+    sayaclariGuncelle(kartlar); // başlangıçta hepsini say
+
+    function renderKartlar() {
+        const aktifKategori  = document.querySelector(".filtre-btn.aktif")?.dataset.kategori || "tumu";
+        const aramaMetni     = document.getElementById("searchInput").value.toLowerCase().trim();
+        const siralama       = document.getElementById("sortSelect").value;
+        const grid           = document.getElementById("duyuru-grid");
+        const bosMesaj       = document.getElementById("bos-mesaj");
+
+        // Filtreleme
+        let gorunenler = kartlar.filter(kart => {
+            const kategoriEsles = aktifKategori === "tumu" || kart.dataset.kategori === aktifKategori;
+            const baslik = kart.querySelector(".title")?.textContent.toLowerCase() || "";
+            const govde  = kart.querySelector(".body")?.textContent.toLowerCase()  || "";
+            const aramaEsles = aramaMetni === "" || baslik.includes(aramaMetni) || govde.includes(aramaMetni);
+            return kategoriEsles && aramaEsles;
+        });
+
+        // Sıralama
+        gorunenler.sort((a, b) => {
+            const tA = new Date(a.dataset.tarih);
+            const tB = new Date(b.dataset.tarih);
+            return siralama === "yeni" ? tB - tA : tA - tB;
+        });
+
+        // DOM güncelle
+        kartlar.forEach(k => { k.classList.add("gizli"); k.style.order = ""; });
+        gorunenler.forEach((k, i) => { k.classList.remove("gizli"); k.style.order = i; });
+
+        bosMesaj.style.display = gorunenler.length === 0 ? "block" : "none";
+        sayaclariGuncelle(gorunenler);
+    }
+
+    // Filtre butonları
+    document.querySelectorAll(".filtre-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+            document.querySelectorAll(".filtre-btn").forEach(b => b.classList.remove("aktif"));
+            btn.classList.add("aktif");
+            renderKartlar();
+        });
+    });
+
+    // Arama (debounce)
+    let debounceTimer;
+    document.getElementById("searchInput").addEventListener("input", () => {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(renderKartlar, 250);
+    });
+
+    // Sıralama
+    document.getElementById("sortSelect").addEventListener("change", renderKartlar);
+
+    // SCROLL TOP
+    const scrollTopBtn = document.getElementById("scrollTop");
+    window.addEventListener("scroll", () => {
+        scrollTopBtn.classList.toggle("visible", window.scrollY > 400);
+    });
+    scrollTopBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+
+});
+</script>
+</body>
+</html>

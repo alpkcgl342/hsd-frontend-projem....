@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Komite Detay – HSD Gelişim</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { darkMode: 'class' }</script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root { --navy: #04067c; }
+        body { font-family: 'Inter', sans-serif; }
+        html.dark body { background: #0d1117; color: #e0e0e0; }
+
+        nav { transition: padding 0.35s ease, box-shadow 0.35s ease; }
+        nav.nav-scrolled {
+            padding-top: 8px !important; padding-bottom: 8px !important;
+            box-shadow: 0 4px 28px rgba(0,0,0,0.45);
+            background-color: rgba(4,6,124,0.92) !important;
+            backdrop-filter: blur(14px);
+        }
+
+        /* HERO */
+        #komiteHero {
+            background: linear-gradient(135deg, #0d6efd 0%, #0028a5 60%, #04067c 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        #komiteHero::before {
+            content: ''; position: absolute; inset: 0;
+            background-image: radial-gradient(rgba(255,255,255,0.15) 1px, transparent 1px);
+            background-size: 28px 28px;
+            mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
+        }
+
+        /* KART HOVER */
+        .uye-kart {
+            transition: transform 0.28s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.28s ease;
+            cursor: pointer;
+        }
+        .uye-kart:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 32px rgba(0,40,165,0.18);
+        }
+
+        html.dark .uye-kart {
+            background: #1a1e23 !important;
+            border-color: #2d3748 !important;
+        }
+        html.dark .uye-kart h5   { color: #f0f6ff !important; }
+        html.dark #uyeSection     { background: #0d1117 !important; }
+        html.dark #uyeSection h2  { color: #f0f6ff !important; }
+
+        /* MODAL */
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.92); }
+            to   { opacity: 1; transform: scale(1); }
+        }
+        .modal-box { animation: fadeInScale 0.25s ease; }
+    </style>
+</head>
+<body class="bg-white dark:bg-[#0d1117] transition-colors duration-300">
+
+<!-- NAVBAR — tüm sayfalarda kullanın -->
+<nav class="bg-[#04067c] sticky top-0 z-50 py-4">
+    <div class="max-w-7xl mx-auto px-4 flex items-center justify-between">
+        <a href="index.html" class="flex items-center gap-2">
+            <img src="hsd-logo-white.png" alt="HSD Logo" class="h-10" onerror="this.style.display='none'">
+        </a>
+
+        <button id="menuBtn" class="text-white lg:hidden focus:outline-none">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+        </button>
+
+        <div class="hidden lg:flex items-center gap-6">
+            <ul class="flex items-center gap-6">
+                <li><a href="index.html#bu-hafta"   class="text-white font-medium hover:text-gray-300 transition">Bülten</a></li>
+                <li><a href="duyurular.html"         class="text-white font-medium hover:text-gray-300 transition">Duyurular</a></li>
+                <li><a href="blog.html"              class="text-white font-medium hover:text-gray-300 transition">Blog</a></li>
+                <li><a href="hakkimizda.html"        class="text-white font-medium hover:text-gray-300 transition">Hakkımızda</a></li>
+                <li><a href="komiteler.html"   class="text-white font-medium hover:text-gray-300 transition">Komiteler</a></li>
+                <li><a href="ekibimiz.html"    class="text-white font-medium hover:text-gray-300 transition">Ekibimiz</a></li>
+                <li><a href="iletisim.html"    class="text-white font-medium hover:text-gray-300 transition">İletişim</a></li>
+            </ul>
+            <a href="https://www.gelisim.edu.tr" target="_blank">
+                <img src="igu.png" alt="IGU Logo" class="h-10 ml-4" onerror="this.style.display='none'">
+            </a>
+            <button id="darkModeBtn" class="text-2xl bg-transparent border-none cursor-pointer ml-2">🌙</button>
+        </div>
+    </div>
+
+    <div id="mobileMenu" class="hidden lg:hidden px-4 pt-2 pb-4 flex flex-col gap-3">
+        <a href="index.html#bu-hafta"  class="text-white font-medium">Bülten</a>
+        <a href="duyurular.html"       class="text-white font-medium">Duyurular</a>
+        <a href="blog.html"            class="text-white font-medium">Blog</a>
+        <a href="hakkimizda.html"      class="text-white font-medium">Hakkımızda</a>
+        <a href="komiteler.html"      class="text-white font-medium">Komiteler</a>
+        <a href="ekibimiz.html"  class="text-white font-medium">Ekibimiz</a>
+        <a href="iletisim.html"  class="text-white font-medium">İletişim</a>
+        <button id="darkModeBtnMobile" class="text-2xl bg-transparent border-none cursor-pointer text-white w-fit">🌙</button>
+    </div>
+</nav>
+
+    <!-- Mobil menü -->
+    <div id="mobileMenu" class="hidden lg:hidden px-4 pt-2 pb-4 flex flex-col gap-3">
+        <a href="#bu-hafta"   class="text-white font-medium">Bülten</a>
+        <a href="duyurular.html" class="text-white font-medium">Duyurular</a>
+        <a href="blog.html"       class="text-white font-medium">Blog</a>
+        <a href="hakkimizda.html" class="text-white font-medium">Hakkımızda</a>
+        <a href="komiteler.html"  class="text-gray-200 hover:text-white text-sm font-medium transition-colors">Komiteler</a>        
+        <a href="ekibimiz.html"   class="text-white font-medium">Ekibimiz</a>
+        <a href="iletisim.html"   class="text-white font-medium">İletişim</a>
+        <button id="darkModeBtnMobile" class="text-2xl bg-transparent border-none cursor-pointer text-white w-fit">🌙</button>
+    </div>
+</nav>
+
+<!-- HERO -->
+<header id="komiteHero" class="text-white text-center py-20">
+    <div class="max-w-3xl mx-auto px-4 relative z-10">
+        <a href="komiteler.html" class="inline-flex items-center gap-2 text-blue-200 text-sm font-medium hover:text-white transition mb-6">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/>
+            </svg>
+            Tüm Komiteler
+        </a>
+        <div id="heroIcon" class="text-6xl mb-4"></div>
+        <h1 id="heroBaslik" class="text-4xl font-extrabold mb-2"></h1>
+        <p id="heroAltBaslik" class="text-blue-100 text-xl font-medium"></p>
+        <div id="heroBanner" class="h-1 w-24 rounded-full mx-auto mt-6 opacity-80"></div>
+    </div>
+</header>
+
+<!-- ÜYE KARTLARI -->
+<section id="uyeSection" class="py-20 bg-white dark:bg-[#0d1117]">
+    <div class="max-w-7xl mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-2 text-gray-900 dark:text-white">Komite Üyeleri</h2>
+        <div id="altCizgi" class="w-12 h-1 mx-auto mb-16 rounded"></div>
+        <div id="uyeGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+    </div>
+</section>
+
+<!-- MODAL -->
+<div id="modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 backdrop-blur-sm">
+    <div class="modal-box bg-white dark:bg-[#1a1e23] rounded-3xl shadow-2xl w-full max-w-sm mx-4 p-8 relative">
+        <button id="modalKapat" class="absolute top-4 right-5 text-gray-400 hover:text-gray-700 dark:hover:text-white text-2xl font-bold transition">×</button>
+        <div id="modalIcerik" class="text-center"></div>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="bg-[#04067c] text-white py-8 text-center">
+    <p class="text-sm text-blue-200">© 2025 HSD Gelişim – İstanbul Gelişim Üniversitesi</p>
+</footer>
+
+<script>
+// ── KOMİTE VERİLERİ ──────────────────────────────────────────────
+const KOMITELER = {
+    "sosyal-medya": {
+        icon: "📱", ad: "Sosyal Medya", altBaslik: "& İçerik Komitesi",
+        renk: "#e91e8c",
+        uyeler: [
+            { isim: "Yaren Timur", bolum: "Yönetim bilişim Sistemleri",    resim: "yaren-timur.jpeg", linkedin: "https://www.linkedin.com/in/yaren-timur-07245b296/" },
+            { isim: "Azra Nur Aslancan", bolum: "Yönetim Bilişim Sistemleri",       resim: "azra-nur-aslancan.jpeg", linkedin: "https://www.linkedin.com/in/azra-aslancan-ba5aa2404/" },
+            { isim: "Sude Sabuncu", bolum: "Yönetim Bilişim Sistemleri",   resim: "sude-sabuncu.jpeg", linkedin: "https://www.linkedin.com/in/sude-sabuncu-801900396/" },
+            { isim: "Vildan Serçe", bolum: "Yönetim Bilişim Sistemleri",    resim: "vildan-serce.jpeg", linkedin: "https://www.linkedin.com/in/vildan-ser%C3%A7e-5751b1378/" },
+            { isim: "Atiye Kübra Altınok", bolum: "Yazılım Mühendisliği",         resim: "atiye-kubra-altinok.jpeg", linkedin: "" },
+        ]
+    },
+    "organizasyon": {
+        icon: "🎪", ad: "Organizasyon", altBaslik: "& Etkinlik Komitesi",
+        renk: "#00897b",
+        uyeler: [
+            { isim: "Damla Muyan", bolum: "Yönetim Bilişim Sistemleri", resim: "damla-muyan.jpeg", linkedin: "https://www.linkedin.com/in/damla-muyan-231233374/" },
+            { isim: "Faruk Cihan Toker", bolum: "Yönetim Bilişim Sistemleri", resim: "cihan-toker.jpeg", linkedin: "https://www.linkedin.com/in/faruk-cihan-toker-82546b245/" },
+            { isim: "Ebrar Balıbey", bolum: "Yönetim Bilişim Sistemleri", resim: "ebrar-balibey.jpeg", linkedin: "https://www.linkedin.com/in/ebrar-bal%C4%B1bey-0059a7399/" },
+            { isim: "Eren Topaktaş", bolum: "Yönetim Bilişim Sistemleri", resim: "eren-topaktas.jpeg", linkedin: "https://www.linkedin.com/in/eren-topakta%C5%9F-143174347/" },
+            { isim: "Furkan Kemerpınar", bolum: "Yönetim Bilişim Sistemleri", resim: "furkan-kemerpinar.jpeg", linkedin: "https://www.linkedin.com/in/furkan-kemerp%C4%B1nar-55b75a388/" },
+            { isim: "Hikmet Eren", bolum: "Bilgisayar Mühendisliği", resim: "hikmet-eren.jpeg", linkedin: "https://www.linkedin.com/in/hikmeteren/" },
+            { isim: "İrem Karabıyık", bolum: "Bilgisayar Mühendisliği", resim: "irem-karabiyik.jpeg", linkedin: "https://www.linkedin.com/in/irem-karab%C4%B1y%C4%B1k-85a675362/" },
+            { isim: "Medine Aksakal", bolum: "Yönetim Bilişim Sistemleri", resim: "medine-aksakal.jpeg", linkedin: "https://www.linkedin.com/in/medine-aksakal-0735a2391/" },
+            { isim: "Meryem Demirbaş", bolum: "Yönetim Bilişim Sistemleri", resim: "meryem-demirbas.jpeg", linkedin: "https://www.linkedin.com/in/meryem-demirba%C5%9F-9219793b7/" },
+            { isim: "Özkan Karadağ", bolum: "Yönetim Bilişim Sistemleri", resim: "ozkan-karadag.jpg", linkedin: "https://www.linkedin.com/in/%C3%B6zkan-karada%C4%9F-116a153a2/" },
+            { isim: "Talha Çelebi", bolum: "Yönetim Bilişim Sistemleri", resim: "talha-celebi.jpeg", linkedin: "https://www.linkedin.com/in/talha-%C3%A7elebi-975523369/" },
+        ]
+    },
+    "sponsorluk": {
+        icon: "🤝", ad: "Sponsorluk", altBaslik: "& Dış İlişkiler Komitesi",
+        renk: "#f57c00",
+        uyeler: [
+                { isim: "Eren Topaktaş", bolum: "Yönetim Bilişim Sistemleri", resim: "eren-topaktas.jpeg", linkedin: "https://www.linkedin.com/in/eren-topakta%C5%9F-143174347/" },
+                { isim: "Damla Muyan", bolum: "Yönetim Bilişim Sistemleri", resim: "damla-muyan.jpeg", linkedin: "https://www.linkedin.com/in/damla-muyan-231233374/" },
+                { isim: "Faruk Cihan Toker", bolum: "Yönetim Bilişim Sistemleri", resim: "cihan-toker.jpeg", linkedin: "https://www.linkedin.com/in/faruk-cihan-toker-82546b245/" },
+                { isim: "Özkan Karadağ", bolum: "Yönetim Bilişim Sistemleri", resim: "ozkan-karadag.jpg", linkedin: "https://www.linkedin.com/in/%C3%B6zkan-karada%C4%9F-116a153a2/" },
+                { isim: "Furkan Kemerpınar", bolum: "Yönetim Bilişim Sistemleri", resim: "furkan-kemerpinar.jpeg", linkedin: "https://www.linkedin.com/in/furkan-kemerp%C4%B1nar-55b75a388/" },
+        ]
+    },
+    "teknik": {
+        icon: "💻", ad: "Teknik Ekip", altBaslik: "& Ar-Ge Komitesi",
+        renk: "#6c3fc5",
+        uyeler: [
+                { isim: "Ali Alp Kocaoğlu", bolum: "Yönetim Bilişim Sistemleri", resim: "ali-alp-kocaoglu.png", linkedin: "https://www.linkedin.com/in/ali-alp-kocao%C4%9Flu-9606672a5/" },
+                { isim: "Azra Nur Aslancan", bolum: "Yönetim Bilişim Sistemleri", resim: "azra-nur-aslancan.jpeg", linkedin: "https://www.linkedin.com/in/azra-aslancan-ba5aa2404/" },
+                { isim: "Betül Kırdı", bolum: "Bilgisayar Mühendisliği", resim: "betul-kirdi.jpeg", linkedin: "https://www.linkedin.com/in/bet%C3%BClk%C4%B1rd%C4%B1/" },
+                { isim: "Burak Tikicieri", bolum: "Ön Yüz Yazılım Geliştirme", resim: "burak-tikicieri.jpeg", linkedin: "https://www.linkedin.com/in/burak-tikicieri-a08a0a387/" },
+                { isim: "Ebrar Balıbey", bolum: "Yönetim Bilişim Sistemleri", resim: "ebrar-balibey.jpeg", linkedin: "https://www.linkedin.com/in/ebrar-bal%C4%B1bey-0059a7399/" },
+                { isim: "Ebrar Topal", bolum: "Yönetim Bilişim Sistemleri", resim: "ebrar-topal.jpeg", linkedin: "https://www.linkedin.com/in/ebrar-topal-b710622a8/" },
+                { isim: "Ege Berk Yenal", bolum: "Bilgisayar Mühendisliği", resim: "ege-berk-yenal.jpeg", linkedin: "" },
+                { isim: "Eren Ali Baksoy", bolum: "Yönetim Bilişim Sistemleri", resim: "eren-ali-baksoy.jpeg", linkedin: "" },
+                { isim: "Fatma Süer", bolum: "Elektrik Elektronik Mühendisliği", resim: "fatma-suer.jpeg", linkedin: "https://www.linkedin.com/in/fatma-s%C3%BCer-461311402/" },
+                { isim: "Hikmet Eren", bolum: "Bilgisayar Mühendisliği", resim: "hikmet-eren.jpeg", linkedin: "https://www.linkedin.com/in/hikmeteren/" },
+                { isim: "İrem Karabıyık", bolum: "Bilgisayar Mühendisliği", resim: "irem-karabiyik.jpeg", linkedin: "https://www.linkedin.com/in/irem-karab%C4%B1y%C4%B1k-85a675362/" },
+                { isim: "İrem Kuray", bolum: "Elektrik Elektronik Mühendisliği", resim: "irem-kuray.jpeg", linkedin: "https://www.linkedin.com/in/irem-k-3745853a0/" },
+                { isim: "Kerim Yorulmaz", bolum: "Bilgisayar Mühendisliği", resim: "kerim-yorulmaz.jpeg", linkedin: "https://www.linkedin.com/in/kerim-yorulmaz-b64157285/" },
+                { isim: "Medine Aksakal", bolum: "Yönetim Bilişim Sistemleri", resim: "medine-aksakal.jpeg", linkedin: "https://www.linkedin.com/in/medine-aksakal-0735a2391/" },
+                { isim: "Mehmet Ali Babatutmaz", bolum: "Yönetim Bilişim Sistemleri", resim: "mehmet-ali-babatutmaz.jpeg", linkedin: "https://www.linkedin.com/in/mehmetalib/" },
+                { isim: "Meryem Demirbaş", bolum: "Yönetim Bilişim Sistemleri", resim: "meryem-demirbas.jpeg", linkedin: "https://www.linkedin.com/in/meryem-demirba%C5%9F-9219793b7/" },
+                { isim: "Tuğba Yıldırım", bolum: "Yönetim Bilişim Sistemleri", resim: "tugba-yildirim.jpeg", linkedin: "https://www.linkedin.com/in/tugby/" },
+                { isim: "Yaren Timur", bolum: "Yönetim Bilişim Sistemleri", resim: "yaren-timur.jpeg", linkedin: "https://www.linkedin.com/in/yaren-timur-07245b296/"},
+        ]
+    },
+    "medium": {
+        icon: "✍️", ad: "Medium İçerik", altBaslik: "& Üretim Komitesi",
+        renk: "#00b074",
+        uyeler: [
+                { isim: "Betül Kırdı", bolum: "Bilgisayar Mühendisliği", resim: "betul-kirdi.jpeg", linkedin: "https://www.linkedin.com/in/bet%C3%BClk%C4%B1rd%C4%B1/" },
+                { isim: "Beyzanur Öksüz", bolum: "Yönetim Bilişim Sistemleri", resim: "beyzanur-oksuz.jpeg", linkedin: "https://www.linkedin.com/in/beyzanur%C3%B6ks%C3%BCz0/" },
+                { isim: "Furkan Öztekin", bolum: "Yazılım Mühendisliği", resim: "furkan-oztekin.png", linkedin: "https://www.linkedin.com/in/furkanoztekin/" },
+                { isim: "İrem Kuray", bolum: "Elektrik Elektronik Mühendisliği", resim: "irem-kuray.jpeg", linkedin: "https://www.linkedin.com/in/irem-k-3745853a0/" },
+                { isim: "Kaan Buğdur", bolum: "Yönetim Bilişim Sistemleri", resim: "kaan-bugdur.jpeg", linkedin: "https://www.linkedin.com/in/kaan-ba%C4%9Fdur-ecba%E2%84%A2-5aa8a7229/" },
+                { isim: "Kadir Dalkılıç", bolum: "Yönetim Bilişim Sistemleri", resim: "kadir-dalkilic.jpeg", linkedin: "https://www.linkedin.com/in/kadir-dalk%C4%B1l%C4%B1%C3%A7-221009335/" },
+                { isim: "Miray Yay", bolum: "Yönetim Bilişim Sistemleri", resim: "miray-yay.jpeg", linkedin: "https://www.linkedin.com/in/miray-yay-250718228/" },
+
+        ]
+    }
+};
+
+// ── SAYFA DOLDUR ─────────────────────────────────────────────────
+const params    = new URLSearchParams(window.location.search);
+const key       = params.get('komite') || 'sosyal-medya';
+const komite    = KOMITELER[key] || KOMITELER['sosyal-medya'];
+
+document.getElementById('heroIcon').textContent      = komite.icon;
+document.getElementById('heroBaslik').textContent    = komite.ad;
+document.getElementById('heroAltBaslik').textContent = komite.altBaslik;
+document.getElementById('altCizgi').style.background = komite.renk;
+document.getElementById('heroBanner').style.background = komite.renk;
+document.title = komite.ad + ' Komitesi – HSD Gelişim';
+
+const grid = document.getElementById('uyeGrid');
+komite.uyeler.forEach((uye, i) => {
+    const avatarUrl = uye.resim
+        ? uye.resim
+        : `https://ui-avatars.com/api/?name=${encodeURIComponent(uye.isim)}&background=${komite.renk.replace('#','')}&color=fff&size=120`;
+
+    const kart = document.createElement('div');
+    kart.className = 'uye-kart bg-white dark:bg-[#1a1e23] border border-gray-200 dark:border-gray-800 rounded-2xl p-6 text-center';
+    kart.innerHTML = `
+        <div class="w-20 h-20 rounded-full overflow-hidden mx-auto mb-4 border-2" style="border-color:${komite.renk}">
+            <img src="${avatarUrl}" alt="${uye.isim}" class="w-full h-full object-cover"
+                 onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(uye.isim)}&background=${komite.renk.replace('#','')}&color=fff&size=120'">
+        </div>
+        <h5 class="font-bold text-blue-900 dark:text-white text-sm mb-2">${uye.isim}</h5>
+        <span class="text-xs font-medium px-3 py-1 rounded-full inline-block"
+              style="background:${komite.renk}20; color:${komite.renk}">${uye.bolum}</span>
+        ${uye.linkedin ? `<p class="text-xs text-gray-400 mt-2">LinkedIn →</p>` : ''}
+    `;
+    kart.addEventListener('click', () => acModal(uye, avatarUrl));
+    grid.appendChild(kart);
+});
+
+// ── MODAL ─────────────────────────────────────────────────────────
+const modal      = document.getElementById('modal');
+const modalIcerik = document.getElementById('modalIcerik');
+
+function acModal(uye, avatarUrl) {
+    modalIcerik.innerHTML = `
+        <div class="w-28 h-28 rounded-full overflow-hidden mx-auto mb-5 border-4" style="border-color:${komite.renk}">
+            <img src="${avatarUrl}" alt="${uye.isim}" class="w-full h-full object-cover"
+                 onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(uye.isim)}&background=${komite.renk.replace('#','')}&color=fff&size=112'">
+        </div>
+        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-1">${uye.isim}</h3>
+        <span class="text-sm font-medium px-4 py-1 rounded-full inline-block mb-4"
+              style="background:${komite.renk}20; color:${komite.renk}">${uye.bolum}</span>
+        ${uye.linkedin
+            ? `<div class="mt-4">
+                 <a href="${uye.linkedin}" target="_blank"
+                    class="inline-flex items-center gap-2 bg-blue-700 hover:bg-blue-800 text-white text-sm font-semibold px-5 py-2 rounded-full transition">
+                     LinkedIn Profili →
+                 </a>
+               </div>`
+            : `<p class="text-sm text-gray-400 mt-2">LinkedIn profili henüz eklenmedi.</p>`
+        }
+    `;
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+}
+
+function kapat() { modal.classList.add('hidden'); modal.classList.remove('flex'); }
+document.getElementById('modalKapat').addEventListener('click', kapat);
+modal.addEventListener('click', e => { if (e.target === modal) kapat(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') kapat(); });
+
+// ── DARK MODE ─────────────────────────────────────────────────────
+const html = document.documentElement;
+const btns = [document.getElementById('darkModeBtn'), document.getElementById('darkModeBtnMobile')];
+
+function applyTheme(isDark) {
+    html.classList.toggle('dark', isDark);
+    btns.forEach(b => b && (b.textContent = isDark ? '☀️' : '🌙'));
+    localStorage.setItem('tema', isDark ? 'dark' : 'light');
+}
+applyTheme(localStorage.getItem('tema') === 'dark');
+btns.forEach(btn => btn && btn.addEventListener('click', () => applyTheme(!html.classList.contains('dark'))));
+
+// ── MOBİL MENÜ ───────────────────────────────────────────────────
+const menuBtn    = document.getElementById('menuBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+if (menuBtn) {
+    menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+    mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+}
+</script>
+</body>
+</html>
