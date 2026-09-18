@@ -143,64 +143,11 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
-    // ===== FORM VALIDATION =====
-    const iletisimForm = document.getElementById("iletisimForm");
 
-    if (iletisimForm) {
-        iletisimForm.addEventListener("submit", function (e) {
-            e.preventDefault();
-            formKontrol();
-        });
-    }
-
-    function formKontrol() {
-        let gecerli       = true;
-        const alanlar     = ["adSoyad", "email", "konu", "mesaj"];
-        const emailKurali = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-        alanlar.forEach(id => {
-            const input = document.getElementById(id);
-            const hata  = document.getElementById(id + "Hata");
-            if (!input) return;
-
-            const deger = input.value.trim();
-
-            if (deger === "") {
-                hataGoster(input, hata, "Bu alan boş bırakılamaz!");
-                gecerli = false;
-            } else if (id === "email" && !emailKurali.test(deger)) {
-                hataGoster(input, hata, "Geçerli bir e-posta adresi giriniz!");
-                gecerli = false;
-            } else {
-                input.classList.remove("border-red-500");
-                input.classList.add("border-green-500");
-                if (hata) { hata.textContent = ""; hata.classList.add("hidden"); }
-            }
-        });
-
-        if (gecerli) {
-            iletisimForm.reset();
-            alanlar.forEach(id => {
-                const input = document.getElementById(id);
-                if (input) input.classList.remove("border-green-500");
-            });
-
-            const basari = document.getElementById("form-basari");
-            if (basari) {
-                basari.classList.remove("hidden");
-                setTimeout(() => basari.classList.add("hidden"), 4000);
-            } else {
-                alert("Mesajınız başarıyla gönderildi! 🎉");
-            }
-        }
-    }
-
-    function hataGoster(input, hata, mesaj) {
-        input.classList.add("border-red-500");
-        input.classList.remove("border-gray-300");
-        if (hata) { hata.textContent = mesaj; hata.classList.remove("hidden"); }
-    }
-
+    // NOT: Iletisim formunun gonderimi artik js/iletisim.js dosyasinda,
+    // gercek bir POST /contact istegiyle yapiliyor. Buradaki eski kod
+    // hicbir yere veri gondermeden "basariyla gonderildi" mesaji
+    // gosterdigi icin kaldirildi.
 
     // ===== LIGHTBOX =====
     const overlay     = document.getElementById("lightbox-overlay");
