@@ -42,6 +42,23 @@ document.addEventListener('DOMContentLoaded', function () {
     kart.className =
       'blog-kart bg-white rounded-2xl overflow-hidden border border-blue-100 hover:-translate-y-2 transition-all duration-300 h-full flex flex-col';
 
+    // Kapak görseli (yönetim panelinden yüklenir)
+    if (yazi.coverImage) {
+      var gorselKap = document.createElement('div');
+      gorselKap.className = 'h-44 overflow-hidden';
+
+      var gorsel = document.createElement('img');
+      gorsel.className = 'w-full h-full object-cover';
+      gorsel.alt = yazi.title;
+      gorsel.src = HsdApi.mediaUrl(yazi.coverImage);
+      gorsel.addEventListener('error', function () {
+        gorselKap.remove();
+      });
+
+      gorselKap.appendChild(gorsel);
+      kart.appendChild(gorselKap);
+    }
+
     var govde = document.createElement('div');
     govde.className = 'p-5 flex flex-col flex-1';
 
@@ -60,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     var paragraf = document.createElement('p');
     paragraf.className = 'text-gray-500 text-sm flex-1';
-    paragraf.textContent = ozet(yazi.content, 110);
+    paragraf.textContent = yazi.excerpt || ozet(yazi.content, 110);
 
     var alt = document.createElement('div');
     alt.className = 'flex justify-between items-center mt-4 pt-3 border-t border-gray-100';

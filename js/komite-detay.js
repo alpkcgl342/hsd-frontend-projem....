@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
   };
 
   function avatarUrl(isim, mevcutUrl) {
-    if (mevcutUrl) return mevcutUrl;
+    if (mevcutUrl) return HsdApi.mediaUrl(mevcutUrl);
     return (
       'https://ui-avatars.com/api/?name=' +
       encodeURIComponent(isim) +

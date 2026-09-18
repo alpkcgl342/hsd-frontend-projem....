@@ -83,6 +83,19 @@
   var HsdApi = {
     baseUrl: BASE_URL,
 
+    /**
+     * Görsel adresini çözer.
+     *  - Tam adres (http…) olduğu gibi kullanılır
+     *  - /uploads/… ile başlayanlar backend'den servis edilir
+     *  - Diğerleri sitedeki yerel dosyalardır
+     */
+    mediaUrl: function (yol) {
+      if (!yol) return '';
+      if (/^https?:\/\//.test(yol)) return yol;
+      if (yol.charAt(0) === '/') return BASE_URL + yol;
+      return yol;
+    },
+
     getToken: function () {
       try {
         return global.localStorage && global.localStorage.getItem('hsdAccessToken');
@@ -125,6 +138,11 @@
 
     getCommitteeMembers: function (id) {
       return request('/committees/' + encodeURIComponent(id) + '/members');
+    },
+
+    // --- Ekibimiz ---
+    getTeam: function () {
+      return request('/team');
     },
 
     // --- Etkinlikler ---

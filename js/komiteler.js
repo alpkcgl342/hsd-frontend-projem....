@@ -4,9 +4,9 @@
  * Komite kartları HTML'e elle yazılmıştı. Artık GET /committees ucundan
  * çekiliyor; her komitenin üye sayısı da gösteriliyor.
  *
- * Backend'de komite adı ve açıklaması var, ancak emoji/renk yok. Bu yüzden
- * tasarım bozulmasın diye komite adına göre eşleşen bir görsel tema
- * kullanılıyor; eşleşme bulunamazsa nötr bir tema uygulanıyor.
+ * Emoji ve tema rengi artık backend'den geliyor (yönetim panelinden
+ * düzenlenebilir). Eski kayıtlarda bu alanlar boşsa komite adına göre
+ * eşleşen bir tema kullanılır.
  *
  * Backend'e ulaşılamazsa sayfadaki mevcut statik kartlar korunur.
  */
@@ -52,8 +52,16 @@ document.addEventListener('DOMContentLoaded', function () {
     return null;
   }
 
-  function temaBul(ad) {
-    var kucuk = (ad || '').toLocaleLowerCase('tr');
+  function temaBul(komite) {
+    // Yönetim panelinde belirlenen değerler önceliklidir.
+    if (komite.icon || komite.color) {
+      return {
+        ikon: komite.icon || VARSAYILAN_TEMA.ikon,
+        renk: komite.color || VARSAYILAN_TEMA.renk,
+      };
+    }
+
+    var kucuk = (komite.name || '').toLocaleLowerCase('tr');
 
     for (var i = 0; i < TEMALAR.length; i++) {
       for (var j = 0; j < TEMALAR[i].anahtar.length; j++) {
@@ -65,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function kartOlustur(komite, sira) {
-    var tema = temaBul(komite.name);
+    var tema = temaBul(komite);
     var uyeSayisi = Array.isArray(komite.members) ? komite.members.length : 0;
 
     var dis = document.createElement('div');
@@ -105,7 +113,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Elle hazırlanmış ekip sayfaları (fotoğraf, bölüm, LinkedIn) korunsun diye
     // statik karşılığı olan komitelerde o sayfaya yönlendiriyoruz; yoksa
     // üyeler backend'den çekilir.
-    var statikAnahtar = statikAnahtarBul(komite.name);
+    var statikAnahtar = komite.slug || statikAnahtarBul(komite.name);
     baglanti.href =
       'komite-detay.html?id=' +
       encodeURIComponent(komite.id) +

@@ -45,6 +45,16 @@ document.addEventListener('DOMContentLoaded', function () {
         kategori.classList.remove('hidden');
       }
 
+      if (yazi.coverImage) {
+        var kapak = document.createElement('img');
+        kapak.className = 'w-full h-56 md:h-72 object-cover rounded-2xl mb-6';
+        kapak.alt = yazi.title;
+        kapak.src = HsdApi.mediaUrl(yazi.coverImage);
+        kapak.addEventListener('error', function () { kapak.remove(); });
+        var baslikEl = document.getElementById('baslik');
+        baslikEl.parentNode.insertBefore(kapak, baslikEl);
+      }
+
       // textContent kullanılıyor: içerik HTML olarak yorumlanmaz (XSS koruması)
       document.getElementById('baslik').textContent = yazi.title;
       document.getElementById('icerik').textContent = yazi.content;

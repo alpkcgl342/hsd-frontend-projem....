@@ -30,8 +30,9 @@ localStorage.setItem("hsdApiUrl", "http://localhost:3000");
 | `duyurular.html` | `GET /announcements` | Duyurular backend'den gelir |
 | `blog.html` | `GET /blog` | Yayımlanmış yazılar listenin başına eklenir |
 | `blog-detay.html` | `GET /blog/:id` | Yazı detayı, görüntülenme sayacını artırır |
-| `komiteler.html` | `GET /committees` | Komiteler ve üye sayıları |
+| `komiteler.html` | `GET /committees` | Komiteler, emoji ve renkleri yönetim panelinden gelir |
 | `komite-detay.html` | `GET /committees/:id/members` | Yalnızca statik karşılığı olmayan komiteler için |
+| `ekibimiz.html` | `GET /team` | Elçi, yardımcılar ve kulüp başkanları |
 
 Backend'e ulaşılamazsa sayfalardaki mevcut statik içerik olduğu gibi gösterilir;
 site hiçbir durumda boş kalmaz. Tek istisna iletişim formudur: gönderilemezse
@@ -62,3 +63,15 @@ olması gerekir.
 - [ ] `window.HSD_API_URL` gerçek API adresine ayarlanmalı
 - [ ] Backend'de `CORS_ORIGINS` sitenin alan adını içermeli
 - [ ] Backend `.env` dosyasındaki `JWT_SECRET` / `JWT_REFRESH_SECRET` üretilmiş olmalı
+
+## Görseller
+
+Yönetim panelinden yüklenen görseller backend'de saklanır ve adresleri
+`/uploads/...` ile başlar. `HsdApi.mediaUrl()` bu adresleri API adresiyle
+birleştirir; sitedeki eski göreli görseller (`alp.jpeg` gibi) olduğu gibi
+çalışmaya devam eder.
+
+## Yönetim paneli
+
+İçerik yönetimi backend deposundaki panelden yapılır:
+`http://localhost:3000/admin/login.html`
