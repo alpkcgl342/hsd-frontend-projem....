@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Duyurular — HSD Gelişim</title>
+    <title>İletişim — HSD Gelişim</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script>tailwind.config = { darkMode: 'class' }</script>
@@ -209,9 +209,6 @@
                 <li><a href="ekibimiz.html"    class="text-white font-medium hover:text-gray-300 transition">Ekibimiz</a></li>
                 <li><a href="iletisim.html"    class="text-white font-medium hover:text-gray-300 transition">İletişim</a></li>
             </ul>
-            <a href="https://www.gelisim.edu.tr" target="_blank">
-                <img src="igu.png" alt="IGU Logo" class="h-10 ml-4" onerror="this.style.display='none'">
-            </a>
             <button id="darkModeBtn" class="text-2xl bg-transparent border-none cursor-pointer ml-2">🌙</button>
         </div>
     </div>
@@ -260,10 +257,13 @@
             <h2 class="text-3xl font-bold text-center mb-4 text-gray-900 dark:text-white" data-aos="fade-up">İletişim</h2>
             <div class="w-12 h-1 bg-blue-800 mx-auto mb-12 rounded" data-aos="fade-up" data-aos-delay="100"></div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+            <!-- Harita kaldırıldıktan sonra sol kart kısaldı ve items-start
+                 yüzünden iki sütun eşitsiz duruyordu. Kartlar artık aynı
+                 yüksekliğe uzuyor. -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch">
 
                 <!-- Sol: Bilgi Kartı -->
-                <div class="bg-white dark:bg-[#1a1e23] border border-gray-200 dark:border-gray-800 rounded-3xl p-8 flex flex-col gap-5" data-aos="fade-right" data-aos-delay="150">
+                <div class="bg-white dark:bg-[#1a1e23] border border-gray-200 dark:border-gray-800 rounded-3xl p-8 flex flex-col gap-5 h-full" data-aos="fade-right" data-aos-delay="150">
                     <h3 class="text-gray-900 dark:text-white text-xl font-bold mb-2">Bize Ulaşın</h3>
                     <p class="text-gray-400 text-sm leading-relaxed">
                         Topluluğumuzu takip etmek veya iletişime geçmek için aşağıdaki kanalları kullanabilirsiniz.
@@ -307,32 +307,10 @@
                         </span>
                         <span class="text-sm">TikTok / HSD İGÜ</span>
                     </a>
-
-                    <div class="flex flex-col gap-3">
-                        <div class="flex items-center gap-3 text-gray-500 dark:text-gray-400">
-                            <span class="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-500">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                    <path fill-rule="evenodd" d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-2.083 3.204-4.511 3.204-7.327a8.5 8.5 0 10-17 0c0 2.816 1.26 5.244 3.204 7.327a19.58 19.58 0 002.682 2.282 16.975 16.975 0 001.145.742zM12 13.5a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/>
-                                </svg>
-                            </span>
-                            <span class="text-sm">İstanbul Gelişim Üniversitesi, Avcılar</span>
-                        </div>
-                        <div class="rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-700">
-                            <iframe
-                                src="https://maps.google.com/maps?q=İstanbul+Gelişim+Üniversitesi,+Avcılar,+İstanbul&output=embed&z=16"
-                                width="100%"
-                                height="500"
-                                style="border:0;"
-                                allowfullscreen=""
-                                loading="lazy"
-                                referrerpolicy="no-referrer-when-downgrade">
-                            </iframe>
-                        </div>
-                    </div>
                 </div>
 
                 <!-- Sağ: Form -->
-                <div class="bg-white dark:bg-[#1a1e23] rounded-3xl p-8 border border-gray-200 dark:border-gray-700" data-aos="fade-left" data-aos-delay="150">
+                <div class="bg-white dark:bg-[#1a1e23] rounded-3xl p-8 border border-gray-200 dark:border-gray-700 h-full" data-aos="fade-left" data-aos-delay="150">
                     <form id="iletisimForm" novalidate>
                         <div class="mb-5">
                             <label for="adSoyad" class="block text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2">Ad Soyad</label>
@@ -442,66 +420,9 @@ document.addEventListener("DOMContentLoaded", function () {
         mobileMenu.querySelectorAll("a").forEach(a => a.addEventListener("click", () => mobileMenu.classList.add("hidden")));
     }
 
-    // KARTLAR & SAYAÇLAR
-    const kartlar = Array.from(document.querySelectorAll(".duyuru-kart"));
-
-    function sayaclariGuncelle(gorunenler) {
-        document.getElementById("toplamSayi").textContent  = gorunenler.length;
-        document.getElementById("etkinlikSayi").textContent = gorunenler.filter(k => k.dataset.kategori === "etkinlik").length;
-        document.getElementById("egitimSayi").textContent  = gorunenler.filter(k => k.dataset.kategori === "egitim").length;
-        document.getElementById("projeSayi").textContent   = gorunenler.filter(k => k.dataset.kategori === "proje").length;
-    }
-    sayaclariGuncelle(kartlar); // başlangıçta hepsini say
-
-    function renderKartlar() {
-        const aktifKategori  = document.querySelector(".filtre-btn.aktif")?.dataset.kategori || "tumu";
-        const aramaMetni     = document.getElementById("searchInput").value.toLowerCase().trim();
-        const siralama       = document.getElementById("sortSelect").value;
-        const grid           = document.getElementById("duyuru-grid");
-        const bosMesaj       = document.getElementById("bos-mesaj");
-
-        // Filtreleme
-        let gorunenler = kartlar.filter(kart => {
-            const kategoriEsles = aktifKategori === "tumu" || kart.dataset.kategori === aktifKategori;
-            const baslik = kart.querySelector(".title")?.textContent.toLowerCase() || "";
-            const govde  = kart.querySelector(".body")?.textContent.toLowerCase()  || "";
-            const aramaEsles = aramaMetni === "" || baslik.includes(aramaMetni) || govde.includes(aramaMetni);
-            return kategoriEsles && aramaEsles;
-        });
-
-        // Sıralama
-        gorunenler.sort((a, b) => {
-            const tA = new Date(a.dataset.tarih);
-            const tB = new Date(b.dataset.tarih);
-            return siralama === "yeni" ? tB - tA : tA - tB;
-        });
-
-        // DOM güncelle
-        kartlar.forEach(k => { k.classList.add("gizli"); k.style.order = ""; });
-        gorunenler.forEach((k, i) => { k.classList.remove("gizli"); k.style.order = i; });
-
-        bosMesaj.style.display = gorunenler.length === 0 ? "block" : "none";
-        sayaclariGuncelle(gorunenler);
-    }
-
-    // Filtre butonları
-    document.querySelectorAll(".filtre-btn").forEach(btn => {
-        btn.addEventListener("click", () => {
-            document.querySelectorAll(".filtre-btn").forEach(b => b.classList.remove("aktif"));
-            btn.classList.add("aktif");
-            renderKartlar();
-        });
-    });
-
-    // Arama (debounce)
-    let debounceTimer;
-    document.getElementById("searchInput").addEventListener("input", () => {
-        clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(renderKartlar, 250);
-    });
-
-    // Sıralama
-    document.getElementById("sortSelect").addEventListener("change", renderKartlar);
+    // NOT: Burada duyurular sayfasindan kopyalanmis filtre/sayac kodu vardi.
+    // Bu sayfada ilgili ogeler bulunmadigi icin hata firlatip betigin
+    // geri kalanini (yukari cik butonu vb.) calistirmiyordu; kaldirildi.
 
     // SCROLL TOP
     const scrollTopBtn = document.getElementById("scrollTop");

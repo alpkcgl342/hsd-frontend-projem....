@@ -41,9 +41,6 @@
                 <li><a href="ekibimiz.html"    class="text-white font-medium hover:text-gray-300 transition">Ekibimiz</a></li>
                 <li><a href="iletisim.html"    class="text-white font-medium hover:text-gray-300 transition">İletişim</a></li>
             </ul>
-            <a href="https://www.gelisim.edu.tr" target="_blank">
-                <img src="igu.png" alt="IGU Logo" class="h-10 ml-4" onerror="this.style.display='none'">
-            </a>
             <button id="darkModeBtn" class="text-2xl bg-transparent border-none cursor-pointer ml-2">🌙</button>
         </div>
     </div>
@@ -136,8 +133,10 @@
                 <span class="bg-green-100 text-green-800 text-xs font-bold px-4 py-2 rounded-full uppercase tracking-widest">Kulüp Başkanları</span>
                 <div class="flex-1 h-px bg-gradient-to-l from-transparent to-gray-200"></div>
             </div>
-            <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="bg-white border border-teal-200 rounded-2xl p-6 text-center hover:-translate-y-2 transition-transform">
+            <!-- Kişi sayısı 4'ün katı olmadığında ızgara sola yaslanıp kayık
+                 duruyordu; ortalanmış esnek dizilim her sayıda simetrik kalır. -->
+            <div class="flex flex-wrap justify-center gap-6">
+                <div class="bg-white border border-teal-200 rounded-2xl p-6 text-center w-52 hover:-translate-y-2 transition-transform">
                     <div class="w-20 h-20 rounded-full overflow-hidden mx-auto mb-4">
                         <img src="alp.jpeg" alt="Başkan 1" class="w-full h-full object-cover">
                     </div>
@@ -145,7 +144,7 @@
                     <span class="bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full mt-2 inline-block">Web Sitesi Proje Lideri</span>
                     <span class="block text-gray-400 text-xs italic mt-2">Kulüp 1</span>
                 </div>
-                <div class="bg-white border border-teal-200 rounded-2xl p-6 text-center hover:-translate-y-2 transition-transform">
+                <div class="bg-white border border-teal-200 rounded-2xl p-6 text-center w-52 hover:-translate-y-2 transition-transform">
                     <div class="w-20 h-20 rounded-full overflow-hidden mx-auto mb-4">
                         <img src="eren.jpeg" alt="Başkan 2" class="w-full h-full object-cover">
                     </div>
@@ -153,7 +152,7 @@
                     <span class="bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full mt-2 inline-block">Oyun Proje Lideri</span>
                     <span class="block text-gray-400 text-xs italic mt-2">Kulüp 2</span>
                 </div>
-                <div class="bg-white border border-teal-200 rounded-2xl p-6 text-center hover:-translate-y-2 transition-transform">
+                <div class="bg-white border border-teal-200 rounded-2xl p-6 text-center w-52 hover:-translate-y-2 transition-transform">
                     <div class="w-20 h-20 rounded-full overflow-hidden mx-auto mb-4">
                         <img src="yaren.jpeg" alt="Başkan 3" class="w-full h-full object-cover">
                     </div>
@@ -161,7 +160,7 @@
                     <span class="bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full mt-2 inline-block">Sosyal Medya Lideri</span>
                     <span class="block text-gray-400 text-xs italic mt-2">Kulüp 3</span>
                 </div>
-                <div class="bg-white border border-teal-200 rounded-2xl p-6 text-center hover:-translate-y-2 transition-transform">
+                <div class="bg-white border border-teal-200 rounded-2xl p-6 text-center w-52 hover:-translate-y-2 transition-transform">
                     <div class="w-20 h-20 rounded-full overflow-hidden mx-auto mb-4">
                         <img src="damla.jpeg" alt="Başkan 4" class="w-full h-full object-cover">
                     </div>

@@ -41,11 +41,14 @@ document.addEventListener('DOMContentLoaded', function () {
       etiket: 'Kulüp Başkanları',
       rozetSinif: 'bg-green-100 text-green-800',
       kartSinif:
-        'bg-white border border-teal-200 rounded-2xl p-6 text-center hover:-translate-y-2 transition-transform',
+        'bg-white border border-teal-200 rounded-2xl p-6 text-center w-52 hover:-translate-y-2 transition-transform',
       cerceveSinif: 'w-20 h-20 rounded-full overflow-hidden mx-auto mb-4',
       adSinif: 'font-bold text-blue-900 text-sm',
       yildiz: false,
-      sarmalSinif: 'grid grid-cols-2 lg:grid-cols-4 gap-6',
+      // 4 sütunlu ızgarada kişi sayısı 4'ün katı değilse kartlar sola
+      // yaslanıp üstteki ortalı bölümlere göre kayık duruyordu. Ortalanmış
+      // esnek dizilim her sayıda simetrik kalır.
+      sarmalSinif: 'flex flex-wrap justify-center gap-6',
     },
   ];
 

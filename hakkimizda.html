@@ -143,9 +143,6 @@
                 <li><a href="ekibimiz.html"    class="text-white font-medium hover:text-gray-300 transition">Ekibimiz</a></li>
                 <li><a href="iletisim.html"    class="text-white font-medium hover:text-gray-300 transition">İletişim</a></li>
             </ul>
-            <a href="https://www.gelisim.edu.tr" target="_blank">
-                <img src="igu.png" alt="IGU Logo" class="h-10 ml-4" onerror="this.style.display='none'">
-            </a>
             <button id="darkModeBtn" class="text-2xl bg-transparent border-none cursor-pointer ml-2">🌙</button>
         </div>
     </div>
@@ -215,21 +212,19 @@
             </div>
 
             <!-- Sağ: İstatistikler -->
-            <div class="lg:w-1/2 grid grid-cols-2 gap-4" data-aos="fade-left" data-aos-delay="200">
+            <!-- Üç istatistik var; 2 sütunlu ızgarada sonuncusu tek başına
+                 kalıp kayık duruyordu, 3 sütuna alındı. -->
+            <div class="lg:w-1/2 grid grid-cols-1 sm:grid-cols-3 gap-4" data-aos="fade-left" data-aos-delay="200">
                 <div class="bg-white border-2 border-blue-100 rounded-2xl p-8 text-center hover:-translate-y-1 transition-transform" data-aos="zoom-in" data-aos-delay="250">
-                    <span class="stat-sayi-anim block text-4xl font-extrabold text-blue-800" data-hedef="150" data-plus="true">0</span>
+                    <span class="stat-sayi-anim block text-4xl font-extrabold text-blue-800" data-hedef="40" data-plus="true">0</span>
                     <span class="text-gray-500 text-sm mt-1 block">Üye</span>
                 </div>
                 <div class="bg-white border-2 border-blue-100 rounded-2xl p-8 text-center hover:-translate-y-1 transition-transform" data-aos="zoom-in" data-aos-delay="350">
-                    <span class="stat-sayi-anim block text-4xl font-extrabold text-blue-800" data-hedef="30" data-plus="true">0</span>
+                    <span class="stat-sayi-anim block text-4xl font-extrabold text-blue-800" data-hedef="25" data-plus="true">0</span>
                     <span class="text-gray-500 text-sm mt-1 block">Etkinlik</span>
                 </div>
                 <div class="bg-white border-2 border-blue-100 rounded-2xl p-8 text-center hover:-translate-y-1 transition-transform" data-aos="zoom-in" data-aos-delay="450">
-                    <span class="stat-sayi-anim block text-4xl font-extrabold text-blue-800" data-hedef="20" data-plus="true">0</span>
-                    <span class="text-gray-500 text-sm mt-1 block">Proje</span>
-                </div>
-                <div class="bg-white border-2 border-blue-100 rounded-2xl p-8 text-center hover:-translate-y-1 transition-transform" data-aos="zoom-in" data-aos-delay="550">
-                    <span class="stat-sayi-anim block text-4xl font-extrabold text-blue-800" data-hedef="5" data-plus="true">0</span>
+                    <span class="stat-sayi-anim block text-4xl font-extrabold text-blue-800" data-hedef="1" data-plus="true">0</span>
                     <span class="text-gray-500 text-sm mt-1 block">Yıl</span>
                 </div>
             </div>
